@@ -8,8 +8,9 @@
   --foreground: #f8fafc;
   --card: #1e293b;
   --card-foreground: #f8fafc;
-  --popover: #1e293b;
-  --popover-foreground: #f8fafc;
+  --popover: #ffffff;
+  --popover-foreground: #ffffff;
+  --popover-accent: ##ffd32c;
   --primary: #6fc8fd;
   --primary-foreground: #f8fafc;
   --secondary: #f0f9ff;
@@ -19,8 +20,8 @@
   --accent: rgba(240, 249, 255, 0.2);
   --accent-foreground: #50beff;
   --destructive: #ef4444;
-  --border: #334155;
-  --input: #334155;
+  --border: #f0f9ff;
+  --input: #6fc8fd;
   --ring: rgba(80, 190, 255, 0.5);
   --chart-1: #f97316;
   --chart-2: #06b6d4;

@@ -1,6 +1,18 @@
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8000';
+
+const instance = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 5000,
+});
+
 async function httpGetPlanets() {
-  // TODO: Once API is ready.
-  // Load planets and return as JSON.
+  const response = await instance.get('/planets');
+  return response.data;
 }
 
 async function httpGetLaunches() {

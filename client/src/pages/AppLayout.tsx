@@ -5,9 +5,9 @@ import Launch from './Launch';
 import History from './History';
 import Upcoming from './Upcoming';
 import { Card } from '../components/ui/Card';
-
+import usePlanets from '../hooks/usePlanets';
 const AppLayout = () => {
-  const planets = [{ kepler_name: 'Kepler-186 f' }];
+  const planets = usePlanets();
   const launches = [
     {
       flightNumber: 1,
