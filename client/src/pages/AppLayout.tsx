@@ -4,7 +4,7 @@ import { Footer } from '../components/Footer';
 import Launch from './Launch';
 import History from './History';
 import Upcoming from './Upcoming';
-import { Card } from '@/components/ui/card';
+import { Card } from '../components/ui/Card';
 
 const AppLayout = () => {
   const planets = [{ kepler_name: 'Kepler-186 f' }];

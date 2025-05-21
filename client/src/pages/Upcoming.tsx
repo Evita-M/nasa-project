@@ -6,8 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../components/ui/table';
-import { Button } from '../components/ui/button';
+} from '../components/ui/Table';
+import { Button } from '../components/ui/Button';
 import { AlertTriangle } from 'lucide-react';
 
 interface Launch {
@@ -62,7 +62,6 @@ const Upcoming = ({
         <div className="space-y-4">
           <h1 className="text-2xl font-bold">{title}</h1>
           <p className="text-lg text-white/70">{subtitle}</p>
-          <AlertTriangle className="h-4 w-4" />
           <p className="text-red-700 font-medium">
             Warning! Clicking on the ✖ aborts the mission.
           </p>

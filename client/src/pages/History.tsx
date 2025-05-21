@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 import {
   Table,
   TableBody,
@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../components/ui/table";
+} from '../components/ui/Table';
 
 interface Launch {
   flightNumber: number;
@@ -26,19 +26,22 @@ interface HistoryProps {
 
 const History = ({ launches, title, subtitle }: HistoryProps) => {
   const tableBody = useMemo(() => {
-    return launches?.filter((launch) => !launch.upcoming)
+    return launches
+      ?.filter((launch) => !launch.upcoming)
       .map((launch) => (
         <TableRow key={String(launch.flightNumber)}>
           <TableCell>
-            <span className={`inline-block w-3 h-3 rounded-full ${
-              launch.success ? "bg-green-500" : "bg-red-500"
-            }`} />
+            <span
+              className={`inline-block w-3 h-3 rounded-full ${
+                launch.success ? 'bg-green-500' : 'bg-red-500'
+              }`}
+            />
           </TableCell>
           <TableCell>{launch.flightNumber}</TableCell>
           <TableCell>{new Date(launch.launchDate).toDateString()}</TableCell>
           <TableCell>{launch.mission}</TableCell>
           <TableCell>{launch.rocket}</TableCell>
-          <TableCell>{launch.customers?.join(", ")}</TableCell>
+          <TableCell>{launch.customers?.join(', ')}</TableCell>
         </TableRow>
       ));
   }, [launches]);
@@ -47,9 +50,7 @@ const History = ({ launches, title, subtitle }: HistoryProps) => {
     <article id="history" className="container mx-auto py-8">
       <div>
         <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-lg text-white/70 mb-6">
-          {subtitle}
-        </p>
+        <p className="text-lg text-white/70 mb-6">{subtitle}</p>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -62,9 +63,7 @@ const History = ({ launches, title, subtitle }: HistoryProps) => {
                 <TableHead>Customers</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {tableBody}
-            </TableBody>
+            <TableBody>{tableBody}</TableBody>
           </Table>
         </div>
       </div>
