@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 :root {
   --radius: 0.625rem;
@@ -46,6 +46,7 @@
 @layer base {
   * {
     @apply border-[#334155] outline-[#6fc8fd]/50 text-white;
+    font-family: 'Nunito Sans', sans-serif;
   }
   body {
     background-image: url('/img/bg.jpg');
@@ -54,6 +55,16 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Oxanium', sans-serif;
+    font-variation-settings: 'wght' 500;
+    letter-spacing: 0.05em;
   }
 }
 

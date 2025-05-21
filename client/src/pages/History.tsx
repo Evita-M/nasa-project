@@ -48,9 +48,11 @@ const History = ({ launches, title, subtitle }: HistoryProps) => {
 
   return (
     <article id="history" className="container mx-auto py-8">
-      <div>
-        <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-lg text-white/70 mb-6">{subtitle}</p>
+      <div className="space-y-6">
+        <div className="space-y-4">
+          <h1 className="text-2xl font-bold">{title}</h1>
+          <p className="text-lg text-white/70 mb-6">{subtitle}</p>
+        </div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
