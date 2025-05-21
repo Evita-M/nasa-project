@@ -4,9 +4,11 @@
   "version": "1.0.0",
   "description": "Nasa Project",
   "scripts": {
-    "dev:client": "pnpm --filter client dev",
+    "dev:client": "pnpm --filter nasa-project-client dev",
+    "dev:server": "pnpm --filter nasa-project-api dev",
     "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:client\"",
-    "build:client": "pnpm --filter client build",
+    "build:client": "pnpm --filter nasa-project-client build",
+    "build:server": "pnpm --filter nasa-project-api build",
     "build": "pnpm build:server && pnpm build:client",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -37,5 +39,8 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
