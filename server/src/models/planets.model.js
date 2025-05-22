@@ -42,7 +42,14 @@ function loadPlanetsData() {
   );
 }
 
+async function getAllPlanets() {
+  if (habitablePlanets.length === 0) {
+    await loadPlanetsData();
+  }
+  return habitablePlanets;
+}
+
 module.exports = {
-  planets: habitablePlanets,
+  getAllPlanets,
   loadPlanetsData,
 };
