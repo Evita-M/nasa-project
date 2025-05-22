@@ -6,19 +6,12 @@ import History from './History';
 import Upcoming from './Upcoming';
 import { Card } from '../components/ui/Card';
 import usePlanets from '../hooks/usePlanets';
+import useLaunches from '@/hooks/useLaunches';
+
 const AppLayout = () => {
   const planets = usePlanets();
-  const launches = [
-    {
-      flightNumber: 1,
-      mission: 'Falcon 1',
-      rocket: 'Falcon 1',
-      launchDate: '2028-07-20',
-      target: 'Kepler-186 f',
-      upcoming: true,
-      success: true,
-    },
-  ];
+  const launches = useLaunches();
+
   const isPendingLaunch = false;
   const submitLaunch = () => {};
   const abortLaunch = () => {};

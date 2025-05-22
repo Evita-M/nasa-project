@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'http://localhost:8000/api';
 
 const instance = axios.create({
   baseURL: API_URL,
@@ -16,8 +16,11 @@ async function httpGetPlanets() {
 }
 
 async function httpGetLaunches() {
-  // TODO: Once API is ready.
-  // Load launches, sort by flight number, and return as JSON.
+  const response = await instance.get('/launches');
+  const sortedLaunches = response.data.sort((a: any, b: any) => {
+    return a.flightNumber - b.flightNumber;
+  });
+  return sortedLaunches;
 }
 
 async function httpSubmitLaunch(_launch: unknown) {
