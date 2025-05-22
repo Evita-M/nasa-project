@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .light-mode {
+      --primary: #22d3ee;
+      --primary-light: rgba(34, 211, 238, 0.2);
+    }
+    .dark-mode {
+      --primary: #67e8f9;
+      --primary-light: rgba(103, 232, 249, 0.2);
+    }
+    @media (prefers-color-scheme: dark) {
+      .light-mode {
+        display: none;
+      }
+    }
+    @media (prefers-color-scheme: light) {
+      .dark-mode {
+        display: none;
+      }
+    }
+  </style>
+  <g class="light-mode">
+    <circle
+      cx="50"
+      cy="50"
+      r="45"
+      fill="none"
+      stroke="var(--primary)"
+      stroke-width="2"
+      stroke-opacity="0.2"
+    >
+      <animate
+        attributeName="stroke-opacity"
+        values="0.2;0.4;0.2"
+        dur="4s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <path
+      d="M50 5 A45 45 0 0 1 95 50"
+      fill="none"
+      stroke="var(--primary)"
+      stroke-width="2"
+      stroke-linecap="round"
+    >
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="0 50 50"
+        to="360 50 50"
+        dur="10s"
+        repeatCount="indefinite"
+      />
+    </path>
+    <circle
+      cx="50"
+      cy="50"
+      r="15"
+      fill="var(--primary)"
+      fill-opacity="0.2"
+    >
+      <animate
+        attributeName="r"
+        values="15;16;15"
+        dur="3s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle
+      cx="50"
+      cy="50"
+      r="5"
+      fill="var(--primary)"
+    >
+      <animate
+        attributeName="r"
+        values="5;6;5"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <path
+      d="M50 20 L50 30 M50 70 L50 80 M20 50 L30 50 M70 50 L80 50"
+      stroke="var(--primary)"
+      stroke-width="2"
+      stroke-linecap="round"
+    >
+      <animate
+        attributeName="stroke-opacity"
+        values="1;0.6;1"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+    </path>
+  </g>
+  <g class="dark-mode">
+    <circle
+      cx="50"
+      cy="50"
+      r="45"
+      fill="none"
+      stroke="var(--primary)"
+      stroke-width="2"
+      stroke-opacity="0.2"
+    >
+      <animate
+        attributeName="stroke-opacity"
+        values="0.2;0.4;0.2"
+        dur="4s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <path
+      d="M50 5 A45 45 0 0 1 95 50"
+      fill="none"
+      stroke="var(--primary)"
+      stroke-width="2"
+      stroke-linecap="round"
+    >
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="0 50 50"
+        to="360 50 50"
+        dur="10s"
+        repeatCount="indefinite"
+      />
+    </path>
+    <circle
+      cx="50"
+      cy="50"
+      r="15"
+      fill="var(--primary)"
+      fill-opacity="0.2"
+    >
+      <animate
+        attributeName="r"
+        values="15;16;15"
+        dur="3s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <circle
+      cx="50"
+      cy="50"
+      r="5"
+      fill="var(--primary)"
+    >
+      <animate
+        attributeName="r"
+        values="5;6;5"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    <path
+      d="M50 20 L50 30 M50 70 L50 80 M20 50 L30 50 M70 50 L80 50"
+      stroke="var(--primary)"
+      stroke-width="2"
+      stroke-linecap="round"
+    >
+      <animate
+        attributeName="stroke-opacity"
+        values="1;0.6;1"
+        dur="2s"
+        repeatCount="indefinite"
+      />
+    </path>
+  </g>
+</svg>
