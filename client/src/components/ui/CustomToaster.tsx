@@ -29,9 +29,9 @@ export const CustomToaster = () => {
         },
         error: {
           style: {
-            border: '1px solid lightred',
+            border: '1px solid var(--error)',
           },
-          icon: <XCircle className="h-5 w-5" color="lightred" />,
+          icon: <XCircle className="h-5 w-5" color="var(--error)" />,
         },
         icon: <Info className="h-5 w-5" />,
       }}

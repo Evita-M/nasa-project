@@ -23,11 +23,6 @@
   --border: #f0f9ff;
   --input: #6fc8fd;
   --ring: rgba(80, 190, 255, 0.5);
-  --chart-1: #f97316;
-  --chart-2: #06b6d4;
-  --chart-3: #3b82f6;
-  --chart-4: #84cc16;
-  --chart-5: #eab308;
   --sidebar: #1e293b;
   --sidebar-foreground: #f8fafc;
   --sidebar-primary: #50beff;
@@ -42,6 +37,7 @@
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   --glass-blur: 12.5px;
   --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+  --error: #ff6165;
 }
 
 @layer base {

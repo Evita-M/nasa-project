@@ -2,8 +2,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import toast from 'react-hot-toast';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
 import {
   Select,
   SelectContent,
@@ -13,6 +11,8 @@ import {
 } from '@/components/ui/Select';
 import { launchSchema } from '@/schemas/launch';
 import { LaunchProps } from '@/types/components';
+import { CustomField } from '@/components/ui/CustomField';
+import { Label } from '@/components/ui/Label';
 
 export const Launch = ({
   planets,
@@ -97,50 +97,35 @@ export const Launch = ({
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, resetForm }) => (
-            <Form className="grid max-w-2xl grid-cols-1 gap-6 md:grid-cols-2">
+            <Form className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="launchDate" className="text-sm font-medium">
-                  Launch Date
-                </Label>
-                <Field
-                  as={Input}
-                  type="date"
+                <CustomField
+                  label="Launch Date"
                   id="launchDate"
                   name="launchDate"
+                  type="date"
                   min={today}
                   max="2040-12-31"
-                  className="w-full"
                 />
-                <ErrorMessageComponent name="launchDate" />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="missionName" className="text-sm font-medium">
-                  Mission Name
-                </Label>
-                <Field
-                  as={Input}
-                  type="text"
+                <CustomField
+                  label="Mission Name"
                   id="missionName"
                   name="missionName"
+                  type="text"
                   placeholder="Enter mission name"
-                  className="w-full"
                 />
-                <ErrorMessageComponent name="missionName" />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="rocketName" className="text-sm font-medium">
-                  Rocket Type
-                </Label>
-                <Field
-                  as={Input}
-                  type="text"
+                <CustomField
+                  label="Rocket Type"
                   id="rocketName"
                   name="rocketName"
-                  className="w-full"
+                  type="text"
                 />
-                <ErrorMessageComponent name="rocketName" />
               </div>
 
               <div className="space-y-2">
