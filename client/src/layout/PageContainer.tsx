@@ -8,4 +8,8 @@ interface PageContainerProps {
 export const PageContainer: FC<PageContainerProps> = ({
   children,
   className = '',
-}) => <div className={`container mx-auto ${className}`}>{children}</div>;
+}) => (
+  <div className={`max-w-[1440px] w-full mx-auto px-2 ${className}`}>
+    {children}
+  </div>
+);

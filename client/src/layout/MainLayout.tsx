@@ -13,12 +13,12 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children, isLoading, error }: MainLayoutProps) => {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-full flex-col">
       <PageContainer>
         <Header />
       </PageContainer>
-      <CustomToaster />
-      <PageContainer className="mx-auto flex h-screen flex-col">
+      <PageContainer className="relative flex h-screen flex-col">
+        <CustomToaster />
         <div className="flex flex-1 items-center justify-center px-2 py-8">
           <Card className="min-h-[500px] w-full max-w-[900px]">
             {isLoading && <div>Loading...</div>}
