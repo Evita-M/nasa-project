@@ -9,6 +9,14 @@ interface NavLinkProps {
   className?: string;
 }
 
+const baseStyles =
+  'rounded-lg border border-white/10 bg-white/5 transition-all duration-200 hover:bg-white/10';
+const flexStyles =
+  'group flex items-center gap-2 px-5 py-2 min-w-[120px] text-sm tracking-wider transition-colors duration-200 justify-center';
+const textStyles = 'text-gray-600 hover:text-gray-900';
+const focusStyles =
+  'rounded-md focus-visible:ring-2 focus-visible:ring-yellow-400/60 focus-visible:outline-none';
+
 export const NavLink = ({ label, icon: Icon, to, className }: NavLinkProps) => {
   const location = useLocation();
   const isActive = location.pathname === to;
@@ -17,17 +25,17 @@ export const NavLink = ({ label, icon: Icon, to, className }: NavLinkProps) => {
     <Link
       to={to}
       className={cn(
-        'rounded-lg border border-white/10 bg-white/5 px-4 py-2 transition-all duration-200 hover:bg-white/10',
-        'group flex items-center gap-2 px-3 py-2 text-sm tracking-wider transition-colors duration-200',
-        'text-gray-600 hover:text-gray-900',
-        'rounded-lg border border-white/10 bg-white/5 px-4 py-2 transition-all duration-200 hover:bg-white/10 dark:text-gray-400 dark:hover:text-gray-200',
-        isActive && 'text-primary dark:text-tertiary',
-        'rounded-md focus-visible:ring-2 focus-visible:ring-cyan-400/60 focus-visible:outline-none',
+        baseStyles,
+        flexStyles,
+        textStyles,
+        focusStyles,
+        isActive && 'border-yellow-600/80',
         className
       )}
       aria-current={isActive ? 'page' : undefined}
+      aria-label={label}
     >
-      <Icon className="h-5 w-5" />
+      <Icon className="h-5 w-5" aria-hidden="true" />
       <span>{label}</span>
     </Link>
   );

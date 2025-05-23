@@ -10,16 +10,12 @@ const navItems = [
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 z-50 w-full flex h-16 items-center justify-between">
-      <div className="flex items-center gap-4">
-        <img
-          src="/img/nasa-logo.svg"
-          alt="NASA Logo"
-          className="h-12 w-12 drop-shadow-[0_0_12px_rgba(0,255,247,0.4)] transition-all duration-300 hover:drop-shadow-[0_0_16px_rgba(0,255,247,0.6)]"
-        />
+    <header className="sticky top-0 z-50 w-full flex items-center justify-between py-4">
+      <div className="flex items-center gap-4 drop-shadow-[0_0_12px_rgba(0,255,247,0.4)]">
+        <img src="/img/nasa-logo.svg" alt="NASA Logo" />
         <Logo name="NASA Mission Frontier" />
       </div>
-      <nav className="flex items-center gap-3">
+      <nav className="flex items-center gap-4">
         {navItems.map(({ label, icon: Icon, to }) => (
           <NavLink key={label} label={label} icon={Icon} to={to} />
         ))}
