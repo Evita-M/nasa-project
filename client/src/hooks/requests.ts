@@ -23,14 +23,14 @@ async function httpGetLaunches() {
   return sortedLaunches;
 }
 
-async function httpSubmitLaunch(_launch: unknown) {
-  // TODO: Once API is ready.
-  // Submit given launch data to launch system.
+async function httpSubmitLaunch(launch: unknown) {
+  const response = await instance.post('/launches', launch);
+  return response.data;
 }
 
-async function httpAbortLaunch(_id: unknown) {
-  // TODO: Once API is ready.
-  // Delete launch with given ID.
+async function httpAbortLaunch(id: string) {
+  const response = await instance.delete(`/launches/${id}`);
+  return response.data;
 }
 
 export { httpGetPlanets, httpGetLaunches, httpSubmitLaunch, httpAbortLaunch };
