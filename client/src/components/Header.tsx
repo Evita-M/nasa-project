@@ -1,6 +1,7 @@
 import { CheckCircle, History, RefreshCw } from 'lucide-react';
 import { NavLink } from './ui/NavLink';
 import { Logo } from './ui/Logo';
+import { PageContainer } from '@/layout/PageContainer';
 
 const navItems = [
   { label: 'Launch', icon: CheckCircle, to: '/launch' },
@@ -11,8 +12,8 @@ const navItems = [
 export const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full">
-      <div className="container mx-auto flex h-16 items-center justify-between px-6">
-        <div className="flex items-center gap-3">
+      <PageContainer className="flex h-16 items-center justify-between">
+        <div className="flex items-center gap-4">
           <img
             src="/img/nasa-logo.svg"
             alt="NASA Logo"
@@ -20,12 +21,12 @@ export const Header = () => {
           />
           <Logo name="NASA Mission Frontier" />
         </div>
-        <nav className="flex items-center gap-2">
+        <nav className="flex items-center gap-3">
           {navItems.map(({ label, icon: Icon, to }) => (
             <NavLink key={label} label={label} icon={Icon} to={to} />
           ))}
         </nav>
-      </div>
+      </PageContainer>
     </header>
   );
 };

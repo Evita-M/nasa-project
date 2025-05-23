@@ -8,8 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        ghost:
-          'hover:bg-accent/40 hover:text-accent-foreground backdrop-blur-md',
+        ghost: 'hover:bg-accent/40 hover:text-accent-foreground backdrop-blur-md',
         glass:
           'bg-white/10 border border-white/20 text-white shadow-lg hover:bg-white/20 backdrop-blur-md',
         contained:

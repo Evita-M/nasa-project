@@ -1,11 +1,24 @@
 interface FooterProps {
+  githubUrl: string;
   text: string;
 }
 
-export const Footer = ({ text }: FooterProps) => {
+export const Footer = ({ githubUrl, text }: FooterProps) => {
   return (
-    <footer className="border-b border-cyan-400/10 backdrop-blur-xl py-4 shadow-[0_0_24px_rgba(0,255,247,0.15)]">
-      <p className="text-sm text-center text-white/70">{text}</p>
+    <footer className="flex items-center justify-center border-t border-cyan-400/10 py-4 text-sm text-white/70 backdrop-blur-xl">
+      <p>
+        @ 2025
+        <a
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-1 text-cyan-400 transition-colors duration-200 hover:text-cyan-300"
+        >
+          Evita-M
+        </a>
+        All rights reserved.
+      </p>
+      <p>{text}</p>
     </footer>
   );
 };
