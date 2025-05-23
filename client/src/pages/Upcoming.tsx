@@ -8,20 +8,20 @@ import {
   TableRow,
 } from '../components/ui/Table';
 import { Button } from '../components/ui/Button';
-import { AlertTriangle } from 'lucide-react';
 
 interface Launch {
+  id: string;
   flightNumber: number;
-  launchDate: string;
+  launchDate: Date;
   mission: string;
   rocket: string;
-  target: string;
+  destination: string;
   upcoming: boolean;
 }
 
 interface UpcomingProps {
   launches: Launch[];
-  abortLaunch: (flightNumber: number) => void;
+  abortLaunch: (id: string) => void;
   title: string;
   subtitle: string;
 }
@@ -41,7 +41,7 @@ const Upcoming = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => abortLaunch(launch.flightNumber)}
+              onClick={() => abortLaunch(launch.id)}
               className="hover:bg-red-600 hover:text-white transition-colors duration-200"
             >
               ✖
@@ -51,7 +51,7 @@ const Upcoming = ({
           <TableCell>{new Date(launch.launchDate).toDateString()}</TableCell>
           <TableCell>{launch.mission}</TableCell>
           <TableCell>{launch.rocket}</TableCell>
-          <TableCell>{launch.target}</TableCell>
+          <TableCell>{launch.destination}</TableCell>
         </TableRow>
       ));
   }, [launches, abortLaunch]);

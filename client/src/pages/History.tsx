@@ -10,7 +10,7 @@ import {
 
 interface Launch {
   flightNumber: number;
-  launchDate: string;
+  launchDate: Date;
   mission: string;
   rocket: string;
   customers?: string[];

@@ -5,30 +5,65 @@ import Launch from './Launch';
 import History from './History';
 import Upcoming from './Upcoming';
 import { Card } from '../components/ui/Card';
-import usePlanets from '../hooks/usePlanets';
-import useLaunches from '@/hooks/useLaunches';
+import launchesStore from '@/store/launches-store';
+import { useCallback } from 'react';
+import { Toaster } from 'react-hot-toast';
+import planetsStore from '@/store/planets-store';
 
 const AppLayout = () => {
-  const planets = usePlanets();
-  const launches = useLaunches();
+  const { planets } = planetsStore();
+  const { launches, isLoading, error, addLaunch, abortLaunch } =
+    launchesStore();
 
-  const isPendingLaunch = false;
-  const submitLaunch = () => {};
-  const abortLaunch = () => {};
+  const handleSubmitLaunch = useCallback(
+    async (values: {
+      launchDate: Date;
+      mission: string;
+      rocket: string;
+      destination: string;
+    }) => {
+      await addLaunch(values);
+    },
+    [addLaunch]
+  );
 
   return (
     <div className="flex flex-col min-h-screen text-cyan-100">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#1a1a1a',
+            color: '#fff',
+            border: '1px solid #333',
+          },
+          success: {
+            iconTheme: {
+              primary: '#4ade80',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <Header />
       <div className="flex-1 flex items-center justify-center py-8 px-2">
         <Card className="w-full max-w-[900px] min-h-[500px]">
+          {isLoading && <div>Loading...</div>}
+          {error && <div>Error: {error}</div>}
           <Routes>
             <Route
               path="/"
               element={
                 <Launch
                   planets={planets}
-                  submitLaunch={submitLaunch}
-                  isPendingLaunch={isPendingLaunch}
+                  submitLaunch={handleSubmitLaunch}
                   title="Schedule Mission Launch"
                   subtitle="Schedule a mission to launch on a specific date and time."
                 />
@@ -39,8 +74,7 @@ const AppLayout = () => {
               element={
                 <Launch
                   planets={planets}
-                  submitLaunch={submitLaunch}
-                  isPendingLaunch={isPendingLaunch}
+                  submitLaunch={handleSubmitLaunch}
                   title="Schedule Mission Launch"
                   subtitle="Schedule a mission to launch on a specific date and time."
                 />
