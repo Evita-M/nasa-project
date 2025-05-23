@@ -1,8 +1,8 @@
 {
-  "name": "nasa-project",
+  "name": "nasa-mission-frontier",
   "private": true,
   "version": "1.0.0",
-  "description": "Nasa Project",
+  "description": "Nasa Mission Frontier Project",
   "scripts": {
     "dev:client": "pnpm --filter nasa-project-client dev",
     "dev:server": "pnpm --filter nasa-project-api dev",
@@ -15,8 +15,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^7.0.0",
     "concurrently": "^8.2.2",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -24,8 +22,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "typescript": "^5.3.3"
+    "shx": "^0.3.4"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
