@@ -6,10 +6,10 @@ let latestFlightNumber = 100;
 const launch = {
   id: simpleFaker.string.uuid(),
   flightNumber: 100,
-  mission: 'Kepler Exploration X',
-  rocket: 'Explorer IS1',
+  missionName: 'Kepler Exploration X',
+  rocketName: 'Explorer IS1',
   launchDate: new Date('December 27, 2028'),
-  destination: 'Kepler-186 f',
+  planetName: 'Kepler-186 f',
   customers: ['NASA'],
   upcoming: true,
   success: true,

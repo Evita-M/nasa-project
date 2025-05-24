@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/Button';
 import { UpcomingProps } from '@/types/components';
 import { XIcon } from 'lucide-react';
+import { EmptyState } from '@/components/EmptyState';
 
 export const Upcoming = ({
   launches,
@@ -22,6 +23,11 @@ export const Upcoming = ({
       ?.filter((launch) => launch.upcoming)
       .map((launch) => (
         <TableRow key={String(launch.flightNumber)}>
+          <TableCell>{launch.flightNumber}</TableCell>
+          <TableCell>{new Date(launch.launchDate).toDateString()}</TableCell>
+          <TableCell>{launch.missionName}</TableCell>
+          <TableCell>{launch.rocketName}</TableCell>
+          <TableCell>{launch.planetName}</TableCell>
           <TableCell>
             <Button
               variant="ghost"
@@ -32,11 +38,6 @@ export const Upcoming = ({
               <XIcon className="h-4 w-4" />
             </Button>
           </TableCell>
-          <TableCell>{launch.flightNumber}</TableCell>
-          <TableCell>{new Date(launch.launchDate).toDateString()}</TableCell>
-          <TableCell>{launch.mission}</TableCell>
-          <TableCell>{launch.rocket}</TableCell>
-          <TableCell>{launch.destination}</TableCell>
         </TableRow>
       ));
   }, [launches, abortLaunch]);
@@ -47,25 +48,25 @@ export const Upcoming = ({
         <div className="space-y-4">
           <h1 className="text-2xl font-bold">{title}</h1>
           <p className="text-lg text-white/70">{subtitle}</p>
-          <p className="font-medium text-red-700">
-            Warning! Clicking on the ✖ aborts the mission.
-          </p>
         </div>
-
         <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[2rem]"></TableHead>
-                <TableHead className="w-[3rem]">No.</TableHead>
-                <TableHead className="w-[9rem]">Date</TableHead>
-                <TableHead>Mission</TableHead>
-                <TableHead className="w-[7rem]">Rocket</TableHead>
-                <TableHead>Destination</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>{tableBody}</TableBody>
-          </Table>
+          {launches.length === 0 ? (
+            <EmptyState text="No upcoming missions" />
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[2rem]"></TableHead>
+                  <TableHead className="w-[3rem]">No.</TableHead>
+                  <TableHead className="w-[9rem]">Date</TableHead>
+                  <TableHead>Mission</TableHead>
+                  <TableHead className="w-[7rem]">Rocket</TableHead>
+                  <TableHead>Destination</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>{tableBody}</TableBody>
+            </Table>
+          )}
         </div>
       </div>
     </div>

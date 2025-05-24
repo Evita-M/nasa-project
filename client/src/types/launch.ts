@@ -1,10 +1,10 @@
 export interface Launch {
   id: string;
   flightNumber: number;
-  mission: string;
-  rocket: string;
+  missionName: string;
+  rocketName: string;
   launchDate: Date;
-  destination: string;
+  planetName: string;
   customers: string[];
   upcoming: boolean;
   success: boolean;

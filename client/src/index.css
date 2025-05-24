@@ -40,6 +40,11 @@
 }
 
 @layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
   * {
     @apply border-[#334155] outline-[#6fc8fd]/50 text-white;
     font-family: 'Nunito Sans', sans-serif;
@@ -50,7 +55,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    min-height: 100vh;
   }
   h1,
   h2,

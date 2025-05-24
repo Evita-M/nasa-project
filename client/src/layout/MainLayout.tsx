@@ -17,20 +17,18 @@ export const MainLayout = ({ children, isLoading, error }: MainLayoutProps) => {
       <PageContainer>
         <Header />
       </PageContainer>
-      <PageContainer className="relative flex h-screen flex-col">
+      <PageContainer className="relative flex flex-1 h-full flex-col items-center justify-center">
         <CustomToaster />
-        <div className="flex flex-1 items-center justify-center">
-          <Card className="min-h-[500px] w-full max-w-[900px] p-10">
-            {isLoading && <div>Loading...</div>}
-            {error && <div>Error: {error}</div>}
-            {children}
-          </Card>
-        </div>
+        <Card className="min-h-[500px] max-w-[900px]">
+          {isLoading && <div>Loading...</div>}
+          {error && <div>Error: {error}</div>}
+          {children}
+        </Card>
       </PageContainer>
-      {/* <Footer
+      <Footer
         text="This is a fun learning project and is not affiliated with NASA or SpaceX."
         githubUrl="https://github.com/Evita-M"
-      /> */}
+      />
     </div>
   );
 };
