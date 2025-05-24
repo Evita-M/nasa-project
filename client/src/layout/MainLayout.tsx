@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
-import { Header } from '../components/Header';
-import { Card } from '../components/ui/Card';
-import { CustomToaster } from '@/components/ui/CustomToaster';
 import { PageContainer } from './PageContainer';
-import { Footer } from '@/components/Footer';
+import { Header } from './Header';
+import { Card } from '@/components/Card';
+import { Footer } from './Footer';
+import { CustomToaster } from '@/components/CustomToaster';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -27,10 +27,10 @@ export const MainLayout = ({ children, isLoading, error }: MainLayoutProps) => {
           </Card>
         </div>
       </PageContainer>
-      <Footer
+      {/* <Footer
         text="This is a fun learning project and is not affiliated with NASA or SpaceX."
         githubUrl="https://github.com/Evita-M"
-      />
+      /> */}
     </div>
   );
 };

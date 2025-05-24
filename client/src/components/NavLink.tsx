@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FC } from 'react';
 
 interface NavLinkProps {
   label: string;
@@ -10,14 +11,18 @@ interface NavLinkProps {
 }
 
 const baseStyles =
-  'rounded-lg border border-white/10 bg-white/5 transition-all duration-200 hover:bg-white/10';
+  'rounded-md border border-white/10 bg-white/5 transition-all duration-200 hover:bg-slate-950/15 hover:border-white/20';
 const flexStyles =
   'group flex items-center gap-2 px-5 py-2 min-w-[120px] text-sm tracking-wider transition-colors duration-200 justify-center';
-const textStyles = 'text-gray-600 hover:text-gray-900';
 const focusStyles =
   'rounded-md focus-visible:ring-2 focus-visible:ring-yellow-400/60 focus-visible:outline-none';
 
-export const NavLink = ({ label, icon: Icon, to, className }: NavLinkProps) => {
+export const NavLink: FC<NavLinkProps> = ({
+  label,
+  icon: Icon,
+  to,
+  className,
+}) => {
   const location = useLocation();
   const isActive = location.pathname === to;
 
@@ -27,9 +32,9 @@ export const NavLink = ({ label, icon: Icon, to, className }: NavLinkProps) => {
       className={cn(
         baseStyles,
         flexStyles,
-        textStyles,
         focusStyles,
-        isActive && 'border-yellow-600/80',
+        isActive &&
+          'border-yellow-600 hover:bg-slate-950/20 hover:border-yellow-600/80',
         className
       )}
       aria-current={isActive ? 'page' : undefined}

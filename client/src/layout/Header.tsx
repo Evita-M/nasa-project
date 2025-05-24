@@ -1,6 +1,6 @@
 import { CheckCircle, History, RefreshCw } from 'lucide-react';
-import { NavLink } from './ui/NavLink';
-import { Logo } from './ui/Logo';
+import { NavLink } from '@/components/NavLink';
+import { Logo } from '@/components/Logo';
 
 const navItems = [
   { label: 'Launch', icon: CheckCircle, to: '/launch' },

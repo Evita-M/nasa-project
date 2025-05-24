@@ -6,18 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../components/ui/Table';
+} from '@/components/Table';
 import { HistoryProps } from '@/types/components';
-
-interface Launch {
-  flightNumber: number;
-  launchDate: Date;
-  mission: string;
-  rocket: string;
-  customers?: string[];
-  success: boolean;
-  upcoming: boolean;
-}
 
 export const History = ({ launches, title, subtitle }: HistoryProps) => {
   const tableBody = useMemo(() => {

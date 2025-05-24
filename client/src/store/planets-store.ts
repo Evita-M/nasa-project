@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { httpGetPlanets } from '@/hooks/requests';
 import { Planet } from '@/types/planet';
+import { httpGetPlanets } from '@/api/planets';
 
-export type PlanetsStore = {
+type PlanetsStore = {
   planets: Planet[];
   isLoading: boolean;
   error: string | null;

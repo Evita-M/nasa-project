@@ -1,15 +1,15 @@
 import { useField } from 'formik';
-import { Input } from './Input';
 import { Label } from './Label';
-import { FC } from 'react';
+import { ComponentProps, FC } from 'react';
+import { Input } from './Input';
 
-interface CustomFieldProps {
+interface CustomFieldProps extends ComponentProps<'input'> {
   label: string;
   id: string;
   name: string;
   type?: string;
   placeholder?: string;
-  className?: string;
+  errorMessage?: string;
   [key: string]: any;
 }
 
@@ -19,6 +19,7 @@ export const CustomField: FC<CustomFieldProps> = ({
   name,
   type = 'text',
   placeholder,
+  errorMessage,
   className = '',
   ...props
 }) => {

@@ -6,21 +6,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../components/ui/Table';
-import { Button } from '../components/ui/Button';
+} from '@/components/Table';
+import { Button } from '@/components/Button';
 import { UpcomingProps } from '@/types/components';
+import { XIcon } from 'lucide-react';
 
-interface Launch {
-  id: string;
-  flightNumber: number;
-  launchDate: Date;
-  mission: string;
-  rocket: string;
-  destination: string;
-  upcoming: boolean;
-}
-
-export const Upcoming = ({ launches, abortLaunch, title, subtitle }: UpcomingProps) => {
+export const Upcoming = ({
+  launches,
+  abortLaunch,
+  title,
+  subtitle,
+}: UpcomingProps) => {
   const tableBody = useMemo(() => {
     return launches
       ?.filter((launch) => launch.upcoming)
@@ -33,7 +29,7 @@ export const Upcoming = ({ launches, abortLaunch, title, subtitle }: UpcomingPro
               onClick={() => abortLaunch(launch.id)}
               className="transition-colors duration-200 hover:bg-red-600 hover:text-white"
             >
-              ✖
+              <XIcon className="h-4 w-4" />
             </Button>
           </TableCell>
           <TableCell>{launch.flightNumber}</TableCell>

@@ -11,8 +11,8 @@ export interface Launch {
 }
 
 export interface LaunchPayload {
-  mission: string;
-  rocket: string;
+  missionName: string;
+  rocketName: string;
   launchDate: Date;
-  destination: string;
+  planetName: string;
 }

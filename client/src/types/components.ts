@@ -1,14 +1,16 @@
 import { Launch } from './launch';
 import { Planet } from './planet';
 
+export interface LaunchFormValues {
+  launchDate: Date;
+  mission: string;
+  rocket: string;
+  destination: string;
+}
+
 export interface LaunchProps {
   planets: Planet[];
-  submitLaunch: (values: {
-    launchDate: Date;
-    mission: string;
-    rocket: string;
-    destination: string;
-  }) => Promise<void>;
+  onSubmit: (values: LaunchFormValues) => Promise<void>;
   title: string;
   subtitle: string;
 }

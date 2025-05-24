@@ -19,3 +19,10 @@ export const launchSchema = z.object({
 });
 
 export type LaunchFormValues = z.infer<typeof launchSchema>;
+
+export const initialValues: LaunchFormValues = {
+  launchDate: '',
+  missionName: '',
+  rocketName: '',
+  planetName: '',
+};
