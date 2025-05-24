@@ -61,4 +61,10 @@ const launchesStore = create<LaunchesStore>((set) => ({
   },
 }));
 
+export const selectUpcomingLaunchesCount = (state: LaunchesStore) =>
+  state.launches.filter((launch) => launch.upcoming).length;
+
+export const selectHistoricalLaunchesCount = (state: LaunchesStore) =>
+  state.launches.filter((launch) => !launch.upcoming).length;
+
 export default launchesStore;

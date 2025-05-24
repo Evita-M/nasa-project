@@ -1,14 +1,18 @@
 import { Launch } from '@/modules/Launch';
 import { LaunchFormValues } from '@/forms/create-launch/schema';
-import launchesStore from '@/store/launches-store';
+import launchesStore, {
+  selectUpcomingLaunchesCount,
+} from '@/store/launches-store';
 import planetsStore from '@/store/planets-store';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { Heading } from '@/components/Heading';
+import { generateLaunchSubtitle } from '@/lib/utils';
 
 export default function LaunchPage() {
   const { fetchPlanets, planets } = planetsStore();
   const { addLaunch } = launchesStore();
+  const upcomingCount = launchesStore(selectUpcomingLaunchesCount);
 
   useEffect(() => {
     fetchPlanets();
@@ -33,11 +37,15 @@ export default function LaunchPage() {
     }
   };
 
+  const subtitle = useMemo(() => {
+    return generateLaunchSubtitle(upcomingCount);
+  }, [upcomingCount]);
+
   return (
     <>
       <Heading
         title="Schedule Mission Launch"
-        subtitle="Schedule a mission to launch on a specific date and time."
+        subtitle={subtitle}
         className="mb-6"
       />
       <Launch planets={planets} onSubmit={handleSubmit} />
