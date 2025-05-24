@@ -29,21 +29,23 @@ export const Upcoming: FC<UpcomingProps> = ({ launches, abortLaunch }) => {
           rocketName,
           planetName,
           id,
+          customers,
         }) => (
-          <TableRow key={String(flightNumber)}>
+          <TableRow key={id}>
             <TableCell>{flightNumber}</TableCell>
             <TableCell>{new Date(launchDate).toDateString()}</TableCell>
             <TableCell>{missionName}</TableCell>
             <TableCell>{rocketName}</TableCell>
             <TableCell>{planetName}</TableCell>
+            <TableCell>{customers?.join(', ')}</TableCell>
             <TableCell>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => abortLaunch(id)}
-                className="transition-colors duration-200 hover:bg-red-600 hover:text-white"
+                className="min-w-auto w-[2rem]"
               >
-                <XIcon className="h-4 w-4" />
+                <XIcon className="h-6 w-6" color="var(--error)" />
               </Button>
             </TableCell>
           </TableRow>
@@ -52,24 +54,27 @@ export const Upcoming: FC<UpcomingProps> = ({ launches, abortLaunch }) => {
   }, [launches, abortLaunch]);
 
   return (
-    <div id="upcoming" className="rounded-md border">
+    <>
       {launches.length === 0 ? (
-        <EmptyState text="No upcoming missions" />
+        <div className="flex flex-1 items-center justify-center h-full w-full min-h-[inherit]">
+          <EmptyState text="No upcoming missions" />
+        </div>
       ) : (
-        <Table>
+        <Table id="upcoming" className="rounded-md border h-full">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[2rem]"></TableHead>
               <TableHead className="w-[3rem]">No.</TableHead>
               <TableHead className="w-[9rem]">Date</TableHead>
               <TableHead>Mission</TableHead>
               <TableHead className="w-[7rem]">Rocket</TableHead>
-              <TableHead>Destination</TableHead>
+              <TableHead>Planet</TableHead>
+              <TableHead>Customers</TableHead>
+              <TableHead className="w-[2rem]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>{tableBody}</TableBody>
         </Table>
       )}
-    </div>
+    </>
   );
 };

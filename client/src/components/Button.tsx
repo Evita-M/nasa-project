@@ -17,8 +17,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        ghost:
-          'hover:bg-accent/40 hover:text-accent-foreground backdrop-blur-md',
+        ghost: 'hover:bg-white/10',
         outlined:
           'bg-black/40 border border-yellow-400 text-white shadow-lg hover:bg-slate-950 backdrop-blur-md',
         contained:

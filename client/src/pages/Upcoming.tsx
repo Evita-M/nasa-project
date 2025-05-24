@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 
 export default function UpcomingPage() {
   const { launches, abortLaunch } = launchesStore();
+  const upcomingLaunches = launches.filter((launch) => launch.upcoming);
 
   const handleAbortLaunch = useCallback(
     async (id: string) => {
@@ -20,7 +21,7 @@ export default function UpcomingPage() {
         subtitle="View the upcoming missions."
         className="mb-6"
       />
-      <Upcoming abortLaunch={handleAbortLaunch} launches={launches} />
+      <Upcoming abortLaunch={handleAbortLaunch} launches={upcomingLaunches} />
     </>
   );
 }
