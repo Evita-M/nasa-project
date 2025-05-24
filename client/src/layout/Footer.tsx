@@ -16,9 +16,8 @@ export const Footer = ({ githubUrl, text }: FooterProps) => {
         >
           Evita-M
         </a>
-        All rights reserved.
+        . {text}
       </p>
-      <p>{text}</p>
     </footer>
   );
 };

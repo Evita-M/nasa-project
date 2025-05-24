@@ -4,32 +4,13 @@
 :root {
   --background: #0f172a;
   --text-primary: #fffff;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f8fafc;
-  --popover: #ffffff;
-  --popover-foreground: #ffffff;
-  --popover-accent: ##ffd32c;
   --primary: #6fc8fd;
   --primary-foreground: #f8fafc;
   --secondary: #f0f9ff;
   --secondary-foreground: #0f172a;
-  --muted: rgba(240, 249, 255, 0.15);
-  --muted-foreground: rgba(80, 190, 255, 0.7);
-  --accent: rgba(240, 249, 255, 0.2);
-  --accent-foreground: #50beff;
-  --destructive: #ef4444;
   --border: #f0f9ff;
   --input: #6fc8fd;
   --ring: rgba(80, 190, 255, 0.5);
-  --sidebar: #1e293b;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #50beff;
-  --sidebar-primary-foreground: #f8fafc;
-  --sidebar-accent: #f0f9ff;
-  --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: #334155;
-  --sidebar-ring: rgba(80, 190, 255, 0.5);
   --tertiary: #50beff;
   --tertiary-foreground: #f8fafc;
   --glass-bg: rgba(18, 54, 94, 0.3);
@@ -74,6 +55,9 @@
     box-shadow: var(--glass-shadow);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
+    /* Fallback for browsers that do not support CSS variables in backdrop-filter */
+    backdrop-filter: blur(12.5px);
+    -webkit-backdrop-filter: blur(12.5px);
     border-radius: 10px;
     border: var(--glass-border);
   }
