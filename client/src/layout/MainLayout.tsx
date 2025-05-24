@@ -19,7 +19,7 @@ export const MainLayout = ({ children, isLoading, error }: MainLayoutProps) => {
       </PageContainer>
       <PageContainer className="relative flex flex-1 h-full flex-col items-center justify-center">
         <CustomToaster />
-        <Card className="min-h-[500px] max-w-[900px]">
+        <Card className="min-h-[520px] max-w-[900px]">
           {isLoading && <div>Loading...</div>}
           {error && <div>Error: {error}</div>}
           {children}

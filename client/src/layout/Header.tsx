@@ -1,6 +1,8 @@
 import { CheckCircle, History, RefreshCw } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { Logo } from '@/components/Logo';
+import launchesStore from '@/store/launches-store';
+import { useMemo } from 'react';
 
 const navItems = [
   { label: 'Launch', icon: CheckCircle, to: '/launch' },
@@ -9,6 +11,18 @@ const navItems = [
 ];
 
 export const Header = () => {
+  const { launches } = launchesStore();
+
+  const upcomingLaunchesCount = useMemo(
+    () => launches.filter((launch) => launch.upcoming).length,
+    [launches]
+  );
+
+  const navItemsWithCount = navItems.map((item) => ({
+    ...item,
+    count: item.label === 'Upcoming' ? upcomingLaunchesCount : undefined,
+  }));
+
   return (
     <header className="sticky top-0 z-50 w-full flex items-center justify-between py-4">
       <div className="flex items-center gap-4 drop-shadow-[0_0_12px_rgba(0,255,247,0.4)]">
@@ -16,8 +30,15 @@ export const Header = () => {
         <Logo name="NASA Mission Frontier" />
       </div>
       <nav className="flex items-center gap-4">
-        {navItems.map(({ label, icon: Icon, to }) => (
-          <NavLink key={label} label={label} icon={Icon} to={to} />
+        {navItemsWithCount.map(({ label, icon: Icon, to, count }) => (
+          <NavLink
+            key={label}
+            label={label}
+            icon={Icon}
+            to={to}
+            count={count}
+            className="min-w-[160px]"
+          />
         ))}
       </nav>
     </header>

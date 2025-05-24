@@ -1,3 +1,4 @@
+import { Heading } from '@/components/Heading';
 import { Upcoming } from '@/modules/Upcoming';
 import launchesStore from '@/store/launches-store';
 import { useCallback } from 'react';
@@ -13,11 +14,13 @@ export default function UpcomingPage() {
   );
 
   return (
-    <Upcoming
-      abortLaunch={handleAbortLaunch}
-      launches={launches}
-      title="Upcoming"
-      subtitle="View the upcoming missions."
-    />
+    <>
+      <Heading
+        title="Upcoming"
+        subtitle="View the upcoming missions."
+        className="mb-6"
+      />
+      <Upcoming abortLaunch={handleAbortLaunch} launches={launches} />
+    </>
   );
 }

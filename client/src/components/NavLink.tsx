@@ -8,12 +8,13 @@ interface NavLinkProps {
   icon: LucideIcon;
   to: string;
   className?: string;
+  count?: number;
 }
 
 const baseStyles =
   'rounded-md border border-white/10 bg-white/5 transition-all duration-200 hover:bg-slate-950/15 hover:border-white/20';
 const flexStyles =
-  'group flex items-center gap-2 px-5 py-2 min-w-[120px] text-sm tracking-wider transition-colors duration-200 justify-center';
+  'group flex items-center gap-2 px-4  py-2 text-sm tracking-wider transition-colors duration-200 justify-center';
 const focusStyles =
   'rounded-md focus-visible:ring-2 focus-visible:ring-yellow-400/60 focus-visible:outline-none';
 
@@ -22,6 +23,7 @@ export const NavLink: FC<NavLinkProps> = ({
   icon: Icon,
   to,
   className,
+  count,
 }) => {
   const location = useLocation();
   const isActive = location.pathname === to;
@@ -42,6 +44,11 @@ export const NavLink: FC<NavLinkProps> = ({
     >
       <Icon className="h-5 w-5" aria-hidden="true" />
       <span>{label}</span>
+      {typeof count === 'number' && count > 0 && (
+        <span className="ml-1 inline-flex items-center justify-center rounded-full bg-yellow-400 text-xs text-black font-bold px-2 w-5 h-5">
+          {count}
+        </span>
+      )}
     </Link>
   );
 };

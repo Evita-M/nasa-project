@@ -4,6 +4,7 @@ import launchesStore from '@/store/launches-store';
 import planetsStore from '@/store/planets-store';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { Heading } from '@/components/Heading';
 
 export default function LaunchPage() {
   const { fetchPlanets, planets } = planetsStore();
@@ -13,13 +14,18 @@ export default function LaunchPage() {
     fetchPlanets();
   }, [fetchPlanets]);
 
-  const handleSubmit = async (values: LaunchFormValues) => {
+  const handleSubmit = async ({
+    launchDate,
+    missionName,
+    rocketName,
+    planetName,
+  }: LaunchFormValues) => {
     try {
       await addLaunch({
-        launchDate: new Date(values.launchDate),
-        missionName: values.missionName,
-        rocketName: values.rocketName,
-        planetName: values.planetName,
+        launchDate: new Date(launchDate),
+        missionName,
+        rocketName,
+        planetName,
       });
       toast.success('Mission scheduled successfully!');
     } catch (error) {
@@ -28,11 +34,13 @@ export default function LaunchPage() {
   };
 
   return (
-    <Launch
-      planets={planets}
-      onSubmit={handleSubmit}
-      title="Schedule Mission Launch"
-      subtitle="Schedule a mission to launch on a specific date and time."
-    />
+    <>
+      <Heading
+        title="Schedule Mission Launch"
+        subtitle="Schedule a mission to launch on a specific date and time."
+        className="mb-6"
+      />
+      <Launch planets={planets} onSubmit={handleSubmit} />
+    </>
   );
 }

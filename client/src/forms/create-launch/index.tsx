@@ -26,12 +26,12 @@ export const LaunchForm: FC<LaunchFormProps> = ({ onSubmit, planets }) => (
     validationSchema={toFormikValidationSchema(launchSchema)}
     onSubmit={onSubmit}
     validateOnBlur={true}
-    validateOnChange={false}
+    validateOnChange={true}
   >
     {({ isSubmitting, resetForm, errors, touched }) => (
       console.log(errors),
       (
-        <Form className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Form className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div className="space-y-2">
             <CustomField
               label="Launch Date"
@@ -97,7 +97,7 @@ export const LaunchForm: FC<LaunchFormProps> = ({ onSubmit, planets }) => (
                 <ErrorMessage message={errors.planetName} />
               )}
           </div>
-          <div className="col-span-1 flex items-center gap-4 md:col-span-2">
+          <div className="col-span-1 flex items-end justify-end gap-4 md:col-span-2">
             <Button
               type="button"
               variant="outlined"
