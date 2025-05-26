@@ -13,8 +13,6 @@ export function generateLaunchSubtitle(upcomingCount: number) {
       return 'There is 1 mission awaiting liftoff. Set up your next adventure by choosing a date, time, and destination.';
     case 2:
     case 3:
-    case 4:
-    case 5:
       return `There are ${upcomingCount} missions scheduled. Plan your next journey by picking a date, time, and planet.`;
     default:
       return `Wow, good job! You have ${upcomingCount} missions scheduled. Keep exploring new worlds!`;

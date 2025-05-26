@@ -1,4 +1,4 @@
-import axiosInstance from './axios-instance';
+import axiosInstance from '../axios-instance';
 
 async function httpGetLaunches() {
   const response = await axiosInstance.get('/launches');

@@ -2,7 +2,7 @@ import {
   httpAbortLaunch,
   httpGetLaunches,
   httpSubmitLaunch,
-} from '@/api/launches';
+} from '@/api/launches/launches-api';
 import { Launch, LaunchPayload } from '@/types/launch';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';

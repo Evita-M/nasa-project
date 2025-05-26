@@ -1,4 +1,4 @@
-import axiosInstance from './axios-instance';
+import axiosInstance from '../axios-instance';
 
 async function httpGetPlanets() {
   const response = await axiosInstance.get('/planets');

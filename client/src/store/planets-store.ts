@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Planet } from '@/types/planet';
-import { httpGetPlanets } from '@/api/planets';
+import { httpGetPlanets } from '@/api/planets/planets-api';
 
 type PlanetsStore = {
   planets: Planet[];

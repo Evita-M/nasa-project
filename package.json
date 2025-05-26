@@ -12,7 +12,10 @@
     "build": "pnpm build:server && pnpm build:client",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:client": "pnpm --filter nasa-project-client test",
+    "test:server": "pnpm --filter nasa-project-api test",
+    "test": "pnpm test:client && pnpm test:server"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
@@ -22,7 +25,8 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "shx": "^0.3.4"
+    "shx": "^0.3.4",
+    "vitest": "^3.1.4"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
