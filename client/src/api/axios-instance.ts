@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 
 const baseURL = import.meta.env.VITE_BASE_API_URL;
 
-interface ApiError {
+export interface ApiError {
   message: string;
   status?: number;
   data?: any;
@@ -43,8 +43,7 @@ class ApiClient {
               apiError.message = 'Bad Request';
               break;
             case 401:
-              apiError.message = 'Unauthorized';
-              // You might want to handle token refresh or redirect to login here
+              apiError.message = 'Unauthosrized';
               break;
             case 403:
               apiError.message = 'Forbidden';
@@ -59,7 +58,8 @@ class ApiClient {
               apiError.message = `Error: ${error.response.status}`;
           }
         } else if (error.request) {
-          apiError.message = 'No response received from server';
+          apiError.message =
+            error.message || 'No response received from server';
         } else {
           apiError.message = error.message || 'Error setting up request';
         }
