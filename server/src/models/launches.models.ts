@@ -1,5 +1,24 @@
-const { simpleFaker } = require('@faker-js/faker');
+import { simpleFaker } from '@faker-js/faker';
 const launches = new Map();
+
+interface LaunchPayload {
+  missionName: string;
+  rocketName: string;
+  launchDate: Date;
+  planetName: string;
+}
+
+interface Launch {
+  id: string;
+  flightNumber: number;
+  missionName: string;
+  rocketName: string;
+  launchDate: Date;
+  planetName: string;
+  customers: string[];
+  upcoming: boolean;
+  success: boolean;
+}
 
 let latestFlightNumber = 100;
 
@@ -17,11 +36,11 @@ const launch = {
 
 launches.set(launch.flightNumber, launch);
 
-function getAllLaunches() {
+function getAllLaunches(): Launch[] {
   return Array.from(launches.values());
 }
 
-function addNewLaunch(launch) {
+function addNewLaunch(launch: LaunchPayload): void {
   latestFlightNumber++;
   launches.set(
     latestFlightNumber,
@@ -35,7 +54,7 @@ function addNewLaunch(launch) {
   );
 }
 
-function deleteLaunchById(id) {
+function deleteLaunchById(id: string): Launch | null {
   const aborted = launches.get(id);
   if (!aborted) {
     return null;
@@ -45,8 +64,4 @@ function deleteLaunchById(id) {
   return aborted;
 }
 
-module.exports = {
-  getAllLaunches,
-  addNewLaunch,
-  deleteLaunchById,
-};
+export { getAllLaunches, addNewLaunch, deleteLaunchById };

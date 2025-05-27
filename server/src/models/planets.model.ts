@@ -1,9 +1,14 @@
-const { parse } = require('csv-parse');
-const fs = require('fs');
-const path = require('path');
+import { parse } from 'csv-parse';
+import fs from 'fs';
+import path from 'path';
 
-const habitablePlanets = [];
+interface Planet {
+  kepler_name: string;
+}
 
+const habitablePlanets: Planet[] = [];
+
+// https://www.centauri-dreams.org/2015/01/30/a-review-of-the-best-habitable-planet-candidates/
 // https://www.centauri-dreams.org/2015/01/30/a-review-of-the-best-habitable-planet-candidates/
 function isHabitablePlanet(planet) {
   return (
@@ -14,12 +19,10 @@ function isHabitablePlanet(planet) {
   );
 }
 
-function loadPlanetsData() {
+function loadPlanetsData(): Promise<void> {
   return new Promise((resolve, reject) =>
     fs
-      .createReadStream(
-        path.join(__dirname, '..', '..', 'data', 'kepler_data.csv')
-      )
+      .createReadStream(path.join(__dirname, '..', 'data', 'kepler_data.csv'))
       .pipe(
         parse({
           comment: '#',
@@ -42,14 +45,11 @@ function loadPlanetsData() {
   );
 }
 
-async function getAllPlanets() {
+async function getAllPlanets(): Promise<Planet[]> {
   if (habitablePlanets.length === 0) {
     await loadPlanetsData();
   }
   return habitablePlanets;
 }
 
-module.exports = {
-  getAllPlanets,
-  loadPlanetsData,
-};
+export { getAllPlanets, loadPlanetsData };

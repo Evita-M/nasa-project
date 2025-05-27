@@ -48,7 +48,10 @@ export default function LaunchPage() {
         subtitle={subtitle}
         className="mb-6"
       />
-      <Launch planets={planets} onSubmit={handleSubmit} />
+      <Launch
+        planets={Array.isArray(planets) ? planets : []}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 }

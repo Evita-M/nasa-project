@@ -1,4 +1,4 @@
-import { describe, expect, test, it, vi, beforeEach } from 'vitest';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
 import axiosInstance from '../axios-instance';
 import {
   httpAbortLaunch,
