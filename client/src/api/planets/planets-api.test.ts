@@ -12,7 +12,7 @@ vi.mock('../axios-instance', () => ({
 
 const mockedAxiosGet = vi.mocked(axiosInstance.get);
 
-describe('planets API', () => {
+describe('GET planets', () => {
   const mockPlanetData: Planet = {
     name: 'Kepler-186 f',
     rotation_period: '1 day',
@@ -42,7 +42,7 @@ describe('planets API', () => {
     expect(axiosInstance.get).toHaveBeenCalledWith('/planets');
   });
 
-  it('handles 400 error correctly', async () => {
+  it('httpGetPlanets handles 400 error correctly', async () => {
     await testErrorHandling(
       { status: 400, message: 'Bad Request', data: {} },
       mockedAxiosGet,
@@ -50,7 +50,7 @@ describe('planets API', () => {
     );
   });
 
-  it('handles 404 error correctly', async () => {
+  it('httpGetPlanets handles 404 error correctly', async () => {
     await testErrorHandling(
       { status: 404, message: 'Not Found', data: {} },
       mockedAxiosGet,
@@ -58,7 +58,7 @@ describe('planets API', () => {
     );
   });
 
-  it('handles 500 error correctly', async () => {
+  it('httpGetPlanets handles 500 error correctly', async () => {
     await testErrorHandling(
       {
         status: 500,
@@ -70,7 +70,7 @@ describe('planets API', () => {
     );
   });
 
-  it('handles 401 error correctly', async () => {
+  it('httpGetPlanets handles 401 error correctly', async () => {
     await testErrorHandling(
       { status: 401, message: 'Unauthorized', data: {} },
       mockedAxiosGet,
@@ -78,7 +78,7 @@ describe('planets API', () => {
     );
   });
 
-  it('handles 403 error correctly', async () => {
+  it('httpGetPlanets handles 403 error correctly', async () => {
     await testErrorHandling(
       { status: 403, message: 'Forbidden', data: {} },
       mockedAxiosGet,
@@ -86,7 +86,7 @@ describe('planets API', () => {
     );
   });
 
-  it('handles network error (no response) correctly', async () => {
+  it('httpGetPlanets handles network error (no response) correctly', async () => {
     await testErrorHandling(
       {
         status: 0,
@@ -98,7 +98,7 @@ describe('planets API', () => {
     );
   });
 
-  it('handles unknown error (no response or request) correctly', async () => {
+  it('httpGetPlanets handles unknown error (no response or request) correctly', async () => {
     await testErrorHandling(
       {
         status: 0,
