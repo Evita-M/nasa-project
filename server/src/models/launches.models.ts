@@ -24,7 +24,7 @@ let latestFlightNumber = 100;
 
 const launch = {
   id: simpleFaker.string.uuid(),
-  flightNumber: 100,
+  flightNumber: latestFlightNumber,
   missionName: 'Kepler Exploration X',
   rocketName: 'Explorer IS1',
   launchDate: new Date('December 27, 2028'),
@@ -40,18 +40,20 @@ function getAllLaunches(): Launch[] {
   return Array.from(launches.values());
 }
 
-function addNewLaunch(launch: LaunchPayload): void {
+function addNewLaunch(launch: LaunchPayload): Launch {
   latestFlightNumber++;
-  launches.set(
-    latestFlightNumber,
-    Object.assign(launch, {
-      id: simpleFaker.string.uuid(),
-      flightNumber: latestFlightNumber,
-      customers: ['NASA'],
-      upcoming: true,
-      success: true,
-    })
-  );
+
+  const newLaunch = Object.assign({}, launch, {
+    id: simpleFaker.string.uuid(),
+    flightNumber: latestFlightNumber,
+    customers: ['NASA'],
+    upcoming: true,
+    success: true,
+  });
+
+  launches.set(latestFlightNumber, newLaunch);
+
+  return newLaunch;
 }
 
 function deleteLaunchById(id: string): Launch | null {

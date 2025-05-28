@@ -7,7 +7,8 @@
     "start": "node dist/server.js",
     "dev": "tsup src/server.ts --watch --onSuccess \"node dist/server.js\"",
     "build": "tsup",
-    "test": "vitest"
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +27,9 @@
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.20",
+    "@types/supertest": "^6.0.3",
     "nodemon": "^3.1.10",
+    "supertest": "^7.1.1",
     "ts-node": "^10.9.2",
     "tsup": "^8.5.0",
     "tsx": "^4.19.4",

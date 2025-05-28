@@ -5,28 +5,45 @@ import {
   deleteLaunchById,
 } from '../../models/launches.models';
 
+export const MESSAGE = {
+  MISSING_REQUIRED_PROPERTY: 'Missing required launch property',
+  INVALID_LAUNCH_DATE: 'Invalid launch date',
+};
+
 // GET all launches
 function httpGetAllLaunches(req: Request, res: Response): any {
   return res.status(200).json(getAllLaunches());
 }
 
 // POST new launch
-function httpCreateLaunch(req: Request, res: Response): any {
-  const { missionName, rocketName, launchDate, planetName } = req.body;
+async function httpCreateLaunch(req: Request, res: Response): Promise<any> {
+  const launch = req.body;
+  const { missionName, rocketName, launchDate, planetName } = launch;
 
   if (!missionName || !rocketName || !launchDate || !planetName) {
     return res.status(400).json({
-      message: 'Missing required launch property',
+      message: MESSAGE.MISSING_REQUIRED_PROPERTY,
     });
   }
 
-  addNewLaunch({
-    ...req.body,
-    launchDate: new Date(launchDate),
-  });
-  return res.status(201).json({
-    message: 'Launch created successfully',
-  });
+  const parsedLaunchDate = new Date(launchDate);
+
+  if (isNaN(parsedLaunchDate.valueOf())) {
+    return res.status(400).json({
+      message: MESSAGE.INVALID_LAUNCH_DATE,
+    });
+  }
+
+  const launchData = {
+    missionName,
+    rocketName,
+    planetName,
+    launchDate: parsedLaunchDate,
+  };
+
+  const newLaunch = addNewLaunch(launchData);
+
+  return res.status(201).json(newLaunch);
 }
 
 // DELETE launch by id
