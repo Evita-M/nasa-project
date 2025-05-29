@@ -2,13 +2,13 @@
   "name": "nasa-project-api",
   "version": "1.0.0",
   "description": "Nasa Mission Frontier API",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "tsup src/server.ts --watch --onSuccess \"node dist/server.js\"",
-    "build": "tsup",
     "test": "vitest",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "watch": "tsup src/server.ts --watch --onSuccess \"node dist/server.js\"",
+    "start": "node dist/server.js",
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +21,8 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "morgan": "^1.10.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pm2": "^6.0.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
