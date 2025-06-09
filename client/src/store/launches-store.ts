@@ -45,7 +45,6 @@ const launchesStore = create<LaunchesStore>()(
           set({ error: 'Failed to submit launch', isLoading: false });
         }
       },
-
       abortLaunch: async (id: string) => {
         set({ isLoading: true, error: null });
         try {

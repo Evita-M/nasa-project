@@ -8,6 +8,7 @@ import path from 'path';
 import routeInit from './routes/index';
 
 import { loadPlanetsData } from './models/planets.model';
+import { mongoConnect } from './services/mongo';
 
 dotenv.config();
 
@@ -32,7 +33,7 @@ app.use(cors(corsOptions));
 app.use(morgan('combined'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use('/api', routeInit());
+app.use('/api/v1', routeInit());
 
 app.get('/', (_req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
@@ -48,6 +49,7 @@ const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
 
 async function startServer() {
+  await mongoConnect();
   await loadPlanetsData();
   server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}...`);

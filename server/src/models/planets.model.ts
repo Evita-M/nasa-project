@@ -1,12 +1,11 @@
 import { parse } from 'csv-parse';
 import fs from 'fs';
 import path from 'path';
+import PlanetsDatabase from './planets.mongo';
 
 interface Planet {
-  kepler_name: string;
+  keplerName: string;
 }
-
-const habitablePlanets: Planet[] = [];
 
 // https://www.centauri-dreams.org/2015/01/30/a-review-of-the-best-habitable-planet-candidates/
 // https://www.centauri-dreams.org/2015/01/30/a-review-of-the-best-habitable-planet-candidates/
@@ -19,7 +18,7 @@ function isHabitablePlanet(planet) {
   );
 }
 
-function loadPlanetsData(): Promise<void> {
+async function loadPlanetsData(): Promise<void> {
   return new Promise((resolve, reject) =>
     fs
       .createReadStream(path.join(__dirname, '..', 'data', 'kepler_data.csv'))
@@ -29,26 +28,32 @@ function loadPlanetsData(): Promise<void> {
           columns: true,
         })
       )
-      .on('data', (data) => {
+      .on('data', async (data) => {
         if (isHabitablePlanet(data)) {
-          habitablePlanets.push(data);
+          await PlanetsDatabase.updateOne(
+            { keplerName: data.kepler_name },
+            { keplerName: data.kepler_name },
+            { upsert: true }
+          );
         }
       })
       .on('error', (err) => {
         console.log(err);
         reject(err);
       })
-      .on('end', () => {
-        console.log(`${habitablePlanets.length} habitable planets found!`);
+      .on('end', async () => {
+        const habitablePlanetsCount = (await getAllPlanets()).length;
+        console.log(`${habitablePlanetsCount} habitable planets found!`);
         resolve();
       })
   );
 }
 
 async function getAllPlanets(): Promise<Planet[]> {
-  if (habitablePlanets.length === 0) {
-    await loadPlanetsData();
-  }
+  const habitablePlanets = await PlanetsDatabase.find(
+    {},
+    { _id: 0, __v: 0, films: 0, residents: 0 }
+  );
   return habitablePlanets;
 }
 

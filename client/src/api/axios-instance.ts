@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 
-const baseURL = import.meta.env.VITE_BASE_API_URL;
+const baseURL = `${import.meta.env.VITE_BASE_API_URL}/${import.meta.env.VITE_API_VERSION}`;
 
 export interface ApiError {
   message: string;

@@ -3,7 +3,7 @@ import express, { Router } from 'express';
 import {
   httpGetAllLaunches,
   httpCreateLaunch,
-  httpDeleteLaunch,
+  httpAbortLaunch,
 } from './launches.controller';
 
 const routeInit = (): Router => {
@@ -11,7 +11,7 @@ const routeInit = (): Router => {
 
   launchesRouter.get('/', httpGetAllLaunches);
   launchesRouter.post('/', httpCreateLaunch);
-  launchesRouter.delete('/:id', httpDeleteLaunch);
+  launchesRouter.delete('/:id', httpAbortLaunch);
 
   return launchesRouter;
 };

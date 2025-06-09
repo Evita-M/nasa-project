@@ -11,11 +11,12 @@ import { generateLaunchSubtitle } from '@/lib/utils';
 
 export default function LaunchPage() {
   const { fetchPlanets, planets } = planetsStore();
-  const { addLaunch } = launchesStore();
+  const { addLaunch, fetchLaunches } = launchesStore();
   const upcomingCount = launchesStore(selectUpcomingLaunchesCount);
 
   useEffect(() => {
     fetchPlanets();
+    fetchLaunches();
   }, [fetchPlanets]);
 
   const handleSubmit = async ({

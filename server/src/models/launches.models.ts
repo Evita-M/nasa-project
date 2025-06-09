@@ -1,5 +1,10 @@
 import { simpleFaker } from '@faker-js/faker';
-const launches = new Map();
+import LaunchesDatabase from './launches.mongo';
+import PlanetsDatabase from './planets.mongo';
+
+enum ErrorCode {
+  PlanetNotFound = 'PlanetNotFound',
+}
 
 interface LaunchPayload {
   missionName: string;
@@ -20,50 +25,74 @@ interface Launch {
   success: boolean;
 }
 
-let latestFlightNumber = 100;
+const DEFAULT_FLIGHT_NUMBER = 1;
 
-const launch = {
-  id: simpleFaker.string.uuid(),
-  flightNumber: latestFlightNumber,
-  missionName: 'Kepler Exploration X',
-  rocketName: 'Explorer IS1',
-  launchDate: new Date('December 27, 2028'),
-  planetName: 'Kepler-186 f',
-  customers: ['NASA'],
-  upcoming: true,
-  success: true,
-};
-
-launches.set(launch.flightNumber, launch);
-
-function getAllLaunches(): Launch[] {
-  return Array.from(launches.values());
+async function findLaunch(filter: any) {
+  return await LaunchesDatabase.findOne(filter);
 }
 
-function addNewLaunch(launch: LaunchPayload): Launch {
-  latestFlightNumber++;
+async function existsLaunchWithId(launchId: string) {
+  const launch = await findLaunch({ id: launchId });
+  if (!launch) return false;
+  return true;
+}
 
-  const newLaunch = Object.assign({}, launch, {
+async function saveLaunch(launch: Launch) {
+  await LaunchesDatabase.findOneAndUpdate({ id: launch.id }, launch, {
+    upsert: true,
+  });
+}
+
+async function getLatestFlightNumber(): Promise<number> {
+  const latestLaunch = await LaunchesDatabase.findOne().sort('-flightNumber');
+  if (!latestLaunch) {
+    return DEFAULT_FLIGHT_NUMBER;
+  }
+  return latestLaunch.flightNumber;
+}
+
+async function getAllLaunches(): Promise<Launch[]> {
+  return await LaunchesDatabase.find({}, { _id: 0, __v: 0 });
+}
+
+async function scheduleNewLaunch(launch: LaunchPayload): Promise<Launch> {
+  const planet = await PlanetsDatabase.findOne({
+    keplerName: launch.planetName,
+  });
+  if (!planet) {
+    throw new Error(ErrorCode.PlanetNotFound);
+  }
+  const newFlightNumber = (await getLatestFlightNumber()) + 1;
+
+  const newLaunch = {
+    ...launch,
     id: simpleFaker.string.uuid(),
-    flightNumber: latestFlightNumber,
+    flightNumber: newFlightNumber,
     customers: ['NASA'],
     upcoming: true,
     success: true,
-  });
+  };
 
-  launches.set(latestFlightNumber, newLaunch);
+  await saveLaunch(newLaunch);
 
   return newLaunch;
 }
 
-function deleteLaunchById(id: string): Launch | null {
-  const aborted = launches.get(id);
-  if (!aborted) {
-    return null;
-  }
-  aborted.upcoming = false;
-  aborted.success = false;
-  return aborted;
+async function abortLaunchById(id: string): Promise<boolean> {
+  console.log(id);
+  const abortedLaunch = await LaunchesDatabase.updateOne(
+    { id },
+    { upcoming: false, success: false }
+  );
+  console.log(abortedLaunch);
+  console.log(await LaunchesDatabase.find({ id }));
+  return abortedLaunch.modifiedCount === 1;
 }
 
-export { getAllLaunches, addNewLaunch, deleteLaunchById };
+export {
+  getAllLaunches,
+  abortLaunchById,
+  scheduleNewLaunch,
+  existsLaunchWithId,
+  ErrorCode,
+};

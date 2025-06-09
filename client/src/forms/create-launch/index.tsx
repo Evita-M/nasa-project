@@ -82,9 +82,9 @@ export const LaunchForm: FC<LaunchFormProps> = ({ onSubmit, planets }) => (
                     <SelectValue placeholder="Select a planet" />
                   </SelectTrigger>
                   <SelectContent>
-                    {planets?.map(({ name }) => (
-                      <SelectItem key={name} value={name}>
-                        {name}
+                    {planets?.map(({ keplerName }) => (
+                      <SelectItem key={keplerName} value={keplerName}>
+                        {keplerName}
                       </SelectItem>
                     ))}
                   </SelectContent>
