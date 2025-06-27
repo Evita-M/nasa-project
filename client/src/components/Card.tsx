@@ -9,7 +9,7 @@ export const Card: FC<CardProps> = ({ className, ...props }) => {
       className={cn('bg-glassmorphism', 'p-6', 'w-full', className)}
       {...props}
     >
-      <div className="flex flex-col gap-2">{props.children}</div>
+      <div className="flex flex-col gap-6 h-full">{props.children}</div>
     </div>
   );
 };

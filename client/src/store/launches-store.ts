@@ -20,7 +20,8 @@ interface LaunchesStore {
   fetchLaunches: (
     page?: number,
     limit?: number,
-    status?: LaunchStatus
+    status?: LaunchStatus,
+    append?: boolean
   ) => Promise<void>;
   addLaunch: (launch: LaunchPayload) => Promise<void>;
   abortLaunch: (id: string) => Promise<void>;
@@ -39,19 +40,26 @@ const launchesStore = create<LaunchesStore>((set, get) => ({
   upcomingCount: 0,
   historyCount: 0,
 
-  fetchLaunches: async (page = DEFAULT_PAGE, limit = DEFAULT_LIMIT, status) => {
+  fetchLaunches: async (
+    page = DEFAULT_PAGE,
+    limit = DEFAULT_LIMIT,
+    status,
+    append = false
+  ) => {
     set({ isLoading: true, error: null });
     try {
       const data = await httpGetLaunches(page, limit, status);
-      set({
-        launches: data.launches,
+      set((state) => ({
+        launches: append
+          ? [...state.launches, ...data.launches]
+          : data.launches,
         totalCount: data.totalCount,
         upcomingCount: data.upcomingCount,
         historyCount: data.historyCount,
         page,
         limit,
         isLoading: false,
-      });
+      }));
     } catch (error) {
       set({ error: 'Failed to fetch launches', isLoading: false });
     }
@@ -78,6 +86,11 @@ const launchesStore = create<LaunchesStore>((set, get) => ({
         isLoading: false,
         historyCount: get().historyCount + 1,
         upcomingCount: get().upcomingCount - 1,
+        launches: get().launches.map((launch) =>
+          launch.id === id
+            ? { ...launch, status: LaunchStatus.HISTORY }
+            : launch
+        ),
       });
     } catch (error) {
       set({ error: 'Failed to abort launch', isLoading: false });

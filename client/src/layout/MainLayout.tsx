@@ -7,11 +7,9 @@ import { CustomToaster } from '@/components/CustomToaster';
 
 interface MainLayoutProps {
   children: ReactNode;
-  isLoading?: boolean;
-  error?: string | null;
 }
 
-export const MainLayout = ({ children, isLoading, error }: MainLayoutProps) => {
+export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="flex h-full flex-col">
       <PageContainer>
@@ -19,11 +17,7 @@ export const MainLayout = ({ children, isLoading, error }: MainLayoutProps) => {
       </PageContainer>
       <PageContainer className="relative flex flex-1 h-full flex-col items-center justify-center">
         <CustomToaster />
-        <Card className="min-h-[520px] max-w-[900px]">
-          {isLoading && <div>Loading...</div>}
-          {error && <div>Error: {error}</div>}
-          {children}
-        </Card>
+        <Card className="min-h-[520px] max-w-[900px]">{children}</Card>
       </PageContainer>
       <Footer
         text="This is a fun learning project and is not affiliated with NASA or SpaceX."
