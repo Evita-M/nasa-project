@@ -1,7 +1,7 @@
-import { Launch } from '@/types/launch';
+import { LaunchStatus } from '@/types/launch';
 import axiosInstance from '../axios-instance';
 
-async function httpGetLaunches(page = 1, limit = 10, status?: Launch) {
+async function httpGetLaunches(page = 1, limit = 10, status?: LaunchStatus) {
   const response = await axiosInstance.get('/launches', {
     params: { page, limit, status },
   });

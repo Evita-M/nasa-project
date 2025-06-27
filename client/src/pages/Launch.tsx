@@ -1,8 +1,6 @@
 import { Launch } from '@/modules/Launch';
 import { LaunchFormValues } from '@/forms/create-launch/schema';
-import launchesStore, {
-  selectUpcomingLaunchesCount,
-} from '@/store/launches-store';
+import launchesStore from '@/store/launches-store';
 import planetsStore from '@/store/planets-store';
 import { useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
@@ -12,7 +10,7 @@ import { generateLaunchSubtitle } from '@/lib/utils';
 export default function LaunchPage() {
   const { fetchPlanets, planets } = planetsStore();
   const { addLaunch, fetchLaunches } = launchesStore();
-  const upcomingCount = launchesStore(selectUpcomingLaunchesCount);
+  const upcomingCount = launchesStore((s) => s.upcomingCount);
 
   useEffect(() => {
     fetchPlanets();

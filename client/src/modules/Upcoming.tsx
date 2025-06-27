@@ -19,39 +19,37 @@ interface UpcomingProps {
 
 export const Upcoming: FC<UpcomingProps> = ({ launches, abortLaunch }) => {
   const tableBody = useMemo(() => {
-    return launches
-      ?.filter((launch) => launch.upcoming)
-      .map(
-        ({
-          flightNumber,
-          launchDate,
-          missionName,
-          rocketName,
-          planetName,
-          id,
-          customers,
-        }) => (
-          <TableRow key={id}>
-            <TableCell>{flightNumber}</TableCell>
-            <TableCell>{new Date(launchDate).toDateString()}</TableCell>
-            <TableCell>{missionName}</TableCell>
-            <TableCell>{rocketName}</TableCell>
-            <TableCell>{planetName}</TableCell>
-            <TableCell>{customers?.join(', ')}</TableCell>
-            <TableCell>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => abortLaunch(id)}
-                className="min-w-auto w-[2rem]"
-              >
-                <XIcon className="h-6 w-6" color="var(--error)" />
-              </Button>
-            </TableCell>
-          </TableRow>
-        )
-      );
-  }, [launches, abortLaunch]);
+    return launches.map(
+      ({
+        flightNumber,
+        launchDate,
+        missionName,
+        rocketName,
+        planetName,
+        id,
+        customers,
+      }) => (
+        <TableRow key={id}>
+          <TableCell>{flightNumber}</TableCell>
+          <TableCell>{new Date(launchDate).toDateString()}</TableCell>
+          <TableCell>{missionName}</TableCell>
+          <TableCell>{rocketName}</TableCell>
+          <TableCell>{planetName}</TableCell>
+          <TableCell>{customers?.join(', ')}</TableCell>
+          <TableCell>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => abortLaunch(id)}
+              className="min-w-auto w-[2rem]"
+            >
+              <XIcon className="h-6 w-6" color="var(--error)" />
+            </Button>
+          </TableCell>
+        </TableRow>
+      )
+    );
+  }, [launches]);
 
   return (
     <>

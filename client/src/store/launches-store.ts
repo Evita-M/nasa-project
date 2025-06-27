@@ -3,76 +3,86 @@ import {
   httpGetLaunches,
   httpSubmitLaunch,
 } from '@/api/launches/launches-api';
-import { Launch, LaunchPayload } from '@/types/launch';
+import { Launch, LaunchPayload, LaunchStatus } from '@/types/launch';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-type LaunchesStore = {
+// Pagination and filtering types
+interface LaunchesStore {
   launches: Launch[];
   isLoading: boolean;
   error: string | null;
-  fetchLaunches: () => Promise<void>;
+  page: number;
+  limit: number;
+  totalCount: number;
+  upcomingCount: number;
+  historyCount: number;
+
+  fetchLaunches: (
+    page?: number,
+    limit?: number,
+    status?: LaunchStatus
+  ) => Promise<void>;
   addLaunch: (launch: LaunchPayload) => Promise<void>;
   abortLaunch: (id: string) => Promise<void>;
-};
+}
 
-const launchesStore = create<LaunchesStore>()(
-  persist(
-    (set) => ({
-      launches: [],
-      isLoading: false,
-      error: null,
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
 
-      fetchLaunches: async () => {
-        set({ isLoading: true, error: null });
-        try {
-          const launches = await httpGetLaunches();
-          set({ launches, isLoading: false });
-        } catch (error) {
-          set({ error: 'Failed to fetch launches', isLoading: false });
-        }
-      },
+const launchesStore = create<LaunchesStore>((set, get) => ({
+  launches: [],
+  isLoading: false,
+  error: null,
+  page: DEFAULT_PAGE,
+  limit: DEFAULT_LIMIT,
+  totalCount: 0,
+  upcomingCount: 0,
+  historyCount: 0,
 
-      addLaunch: async (launch: LaunchPayload) => {
-        set({ isLoading: true, error: null });
-        try {
-          const newLaunch = await httpSubmitLaunch(launch);
-          set((state) => ({
-            launches: [...state.launches, newLaunch],
-            isLoading: false,
-          }));
-        } catch (error) {
-          set({ error: 'Failed to submit launch', isLoading: false });
-        }
-      },
-      abortLaunch: async (id: string) => {
-        set({ isLoading: true, error: null });
-        try {
-          await httpAbortLaunch(id);
-          set((state) => ({
-            launches: state.launches.map((launch) =>
-              launch.id === id
-                ? { ...launch, upcoming: false, success: false }
-                : launch
-            ),
-            isLoading: false,
-          }));
-        } catch (error) {
-          set({ error: 'Failed to abort launch', isLoading: false });
-        }
-      },
-    }),
-    {
-      name: 'launches-storage',
-      partialize: (state) => ({ launches: state.launches }),
+  fetchLaunches: async (page = DEFAULT_PAGE, limit = DEFAULT_LIMIT, status) => {
+    set({ isLoading: true, error: null });
+    try {
+      const data = await httpGetLaunches(page, limit, status);
+      set({
+        launches: data.launches,
+        totalCount: data.totalCount,
+        upcomingCount: data.upcomingCount,
+        historyCount: data.historyCount,
+        page,
+        limit,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({ error: 'Failed to fetch launches', isLoading: false });
     }
-  )
-);
+  },
 
-export const selectUpcomingLaunchesCount = (state: LaunchesStore) =>
-  state.launches.filter((launch) => launch.upcoming).length;
+  addLaunch: async (launch: LaunchPayload) => {
+    set({ isLoading: true, error: null });
+    try {
+      await httpSubmitLaunch(launch);
+      set({
+        isLoading: false,
+        upcomingCount: get().upcomingCount + 1,
+      });
+    } catch (error) {
+      set({ error: 'Failed to submit launch', isLoading: false });
+    }
+  },
 
-export const selectHistoricalLaunchesCount = (state: LaunchesStore) =>
-  state.launches.filter((launch) => !launch.upcoming).length;
+  abortLaunch: async (id: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      await httpAbortLaunch(id);
+      set({
+        isLoading: false,
+        historyCount: get().historyCount + 1,
+        upcomingCount: get().upcomingCount - 1,
+      });
+    } catch (error) {
+      set({ error: 'Failed to abort launch', isLoading: false });
+    }
+  },
+}));
 
 export default launchesStore;

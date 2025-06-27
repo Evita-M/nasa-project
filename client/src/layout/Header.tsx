@@ -1,10 +1,7 @@
 import { CheckCircle, History, RefreshCw } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { Logo } from '@/components/Logo';
-import launchesStore, {
-  selectUpcomingLaunchesCount,
-  selectHistoricalLaunchesCount,
-} from '@/store/launches-store';
+import launchesStore from '@/store/launches-store';
 
 const navItems = [
   { label: 'Launch', icon: CheckCircle, to: '/launch' },
@@ -13,8 +10,8 @@ const navItems = [
 ];
 
 export const Header = () => {
-  const upcomingCount = launchesStore(selectUpcomingLaunchesCount);
-  const historicalCount = launchesStore(selectHistoricalLaunchesCount);
+  const upcomingCount = launchesStore((s) => s.upcomingCount);
+  const historyCount = launchesStore((s) => s.historyCount);
 
   const navItemsWithCount = navItems.map((item) => ({
     ...item,
@@ -22,7 +19,7 @@ export const Header = () => {
       item.label === 'Upcoming'
         ? upcomingCount
         : item.label === 'History'
-          ? historicalCount
+          ? historyCount
           : undefined,
   }));
 
