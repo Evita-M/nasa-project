@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import { ComponentProps, FC } from 'react';
+import { ComponentProps } from 'react';
 
 interface CardProps extends ComponentProps<'div'> {}
 
-export const Card: FC<CardProps> = ({ className, ...props }) => {
+export const Card = ({ className, ...props }: CardProps) => {
   return (
     <div
       className={cn('bg-glassmorphism', 'p-6', 'w-full', className)}

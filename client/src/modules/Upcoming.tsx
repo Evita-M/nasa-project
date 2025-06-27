@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/Table';
+} from '@/components/table';
 import { Button } from '@/components/Button';
 import { XIcon } from 'lucide-react';
 import { EmptyState } from '@/components/EmptyState';

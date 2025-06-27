@@ -18,13 +18,13 @@ const flexStyles =
 const focusStyles =
   'rounded-md focus-visible:ring-2 focus-visible:ring-yellow-400/60 focus-visible:outline-none';
 
-export const NavLink: FC<NavLinkProps> = ({
+export const NavLink = ({
   label,
   icon: Icon,
   to,
   className,
   count,
-}) => {
+}: NavLinkProps) => {
   const location = useLocation();
   const isActive = location.pathname === to;
 

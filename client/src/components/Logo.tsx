@@ -1,10 +1,8 @@
-import { FC } from 'react';
-
 interface LogoProps {
   name: string;
 }
 
-export const Logo: FC<LogoProps> = ({ name }) => {
+export const Logo = ({ name }: LogoProps) => {
   const [first, ...rest] = name.split(' ');
   const restWords = rest.join(' ');
 

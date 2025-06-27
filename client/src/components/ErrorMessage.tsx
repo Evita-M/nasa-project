@@ -1,11 +1,10 @@
 import { Info } from 'lucide-react';
-import { FC } from 'react';
 
 interface ErrorMessageProps {
   message: string;
 }
 
-export const ErrorMessage: FC<ErrorMessageProps> = ({ message }) => (
+export const ErrorMessage = ({ message }: ErrorMessageProps) => (
   <p
     className="mt-1 flex items-center gap-2 text-sm"
     style={{ color: 'var(--error)' }}

@@ -1,17 +1,17 @@
 import { cn } from '@/lib/utils';
-import { ComponentProps, FC } from 'react';
+import { ComponentProps } from 'react';
 import { ErrorMessage } from './ErrorMessage';
 
 interface InputProps extends ComponentProps<'input'> {
   error?: string;
 }
 
-export const Input: FC<InputProps> = ({
+export const Input = ({
   className,
   type = 'text',
   error,
   ...props
-}) => (
+}: InputProps) => (
   <div className="relative h-17">
     <input
       type={type}

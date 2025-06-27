@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/Table';
+} from '@/components/table';
 import { EmptyState } from '@/components/EmptyState';
 import { Launch, LaunchStatus } from '@/types/launch';
 import { StatusIndicator } from '@/components/StatusIndicator';

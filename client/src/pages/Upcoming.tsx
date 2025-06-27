@@ -12,12 +12,9 @@ export default function UpcomingPage() {
     usePaginatedLaunches(LaunchStatus.UPCOMING);
   const { abortLaunch } = launchesStore();
 
-  const handleAbortLaunch = useCallback(
-    async (id: string) => {
-      await abortLaunch(id);
-    },
-    [abortLaunch, fetchLaunches]
-  );
+  const handleAbortLaunch = useCallback(async (id: string) => {
+    await abortLaunch(id);
+  }, []);
 
   return (
     <>
