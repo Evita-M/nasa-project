@@ -42,7 +42,9 @@ describe('GET launches', () => {
 
     const launches = await httpGetLaunches();
     expect(launches).toEqual([mockLaunchData]);
-    expect(axiosInstance.get).toHaveBeenCalledWith('/launches');
+    expect(axiosInstance.get).toHaveBeenCalledWith('/launches', {
+      params: { limit: 10, page: 1, status: undefined },
+    });
   });
 
   it('httpGetLaunches handles 400 error correctly', async () => {

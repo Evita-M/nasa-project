@@ -1,3 +1,8 @@
+export enum LaunchStatus {
+  UPCOMING = 'upcoming',
+  HISTORY = 'history',
+}
+
 export interface Launch {
   id: string;
   flightNumber: number;
@@ -15,9 +20,4 @@ export interface LaunchPayload {
   rocketName: string;
   launchDate: Date;
   planetName: string;
-}
-
-export enum LaunchStatus {
-  UPCOMING = 'upcoming',
-  HISTORY = 'history',
 }
