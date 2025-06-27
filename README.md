@@ -24,7 +24,8 @@ A modern web application for exploring habitable exoplanets and managing NASA mi
 - View upcoming launches and abort them if needed
 - View history of all past launches
 - REST API for planets and launches
-- Modern UI with Zustand state management and Tailwind CSS
+- Modern glassmorphism UI using Tailwind CSS
+- Zustand state management
 - Monorepo structure for easy development and deployment
 - Form handling and validation with React-Hook-Form
 - Type-safe codebase with TypeScript
