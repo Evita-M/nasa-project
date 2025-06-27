@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { FC } from 'react';
 
 interface NavLinkProps {
   label: string;
@@ -12,7 +11,7 @@ interface NavLinkProps {
 }
 
 const baseStyles =
-  'rounded-md border border-white/10 bg-white/5 transition-all duration-200 hover:bg-slate-950/15 hover:border-white/20';
+  'rounded-md min-w-[160px] border border-white/10 bg-white/5 transition-all duration-200 hover:bg-slate-950/15 hover:border-white/20';
 const flexStyles =
   'group flex items-center gap-2 px-4  py-2 text-sm tracking-wider transition-colors duration-200 justify-center';
 const focusStyles =

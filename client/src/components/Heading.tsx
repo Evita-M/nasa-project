@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { ComponentProps, FC } from 'react';
+import { ComponentProps } from 'react';
 
 interface HeadingProps extends ComponentProps<'div'> {
   title: string;

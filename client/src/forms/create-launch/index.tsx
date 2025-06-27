@@ -1,17 +1,16 @@
 import { Field, Form, Formik } from 'formik';
-import { FC } from 'react';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { initialValues, LaunchFormValues, launchSchema } from './schema';
-import { CustomField } from '@/components/CustomField';
-import { Label } from '@/components/Label';
 import {
   Select,
   SelectContent,
   SelectItem,
+  Label,
   SelectTrigger,
   SelectValue,
-} from '@/components/Select';
-import { ErrorMessage } from '@/components/ErrorMessage';
+  ErrorMessage,
+  CustomField,
+} from '@/components/field';
 import { Button } from '@/components/Button';
 import { Planet } from '@/types/planet';
 
@@ -20,7 +19,7 @@ interface LaunchFormProps {
   planets: Planet[];
 }
 
-export const LaunchForm: FC<LaunchFormProps> = ({ onSubmit, planets }) => (
+export const LaunchForm = ({ onSubmit, planets }: LaunchFormProps) => (
   <Formik
     initialValues={initialValues}
     validationSchema={toFormikValidationSchema(launchSchema)}

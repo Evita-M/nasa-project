@@ -61,7 +61,10 @@ export const History = ({
           <TableCell className="w-[9rem]">
             {new Date(launchDate).toDateString()}
           </TableCell>
-          <TableCell className="w-[12rem] truncate" title={missionName}>
+          <TableCell
+            className="max-w-[180px] truncate overflow-hidden whitespace-nowrap"
+            title={missionName}
+          >
             {missionName}
           </TableCell>
           <TableCell className="w-[7rem] truncate" title={rocketName}>
@@ -95,7 +98,9 @@ export const History = ({
               <TableRow>
                 <TableHead className="w-[3rem]">No.</TableHead>
                 <TableHead className="w-[9rem]">Date</TableHead>
-                <TableHead>Mission</TableHead>
+                <TableHead className="max-w-[180px] truncate overflow-hidden whitespace-nowrap">
+                  Mission
+                </TableHead>
                 <TableHead className="w-[7rem]">Rocket</TableHead>
                 <TableHead>Planet</TableHead>
                 <TableHead className="max-w-[180px] truncate overflow-hidden whitespace-nowrap">
