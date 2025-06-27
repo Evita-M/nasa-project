@@ -45,10 +45,11 @@ export const NavLink: FC<NavLinkProps> = ({
       <Icon className="h-5 w-5" aria-hidden="true" />
       <span>{label}</span>
       {typeof count === 'number' && count > 0 && (
-        <span className="ml-1 inline-flex items-center justify-center rounded-full bg-yellow-400 text-xs text-black font-bold px-2 w-5 h-5">
+        <span className="ml-1 inline-flex items-center justify-center rounded-full bg-yellow-400 text-xs text-black font-bold w-8 h-5">
           {count}
         </span>
       )}
+      s
     </Link>
   );
 };
