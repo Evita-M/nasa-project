@@ -1,15 +1,23 @@
 import { getAllPlanets } from '../../models/planets.model';
 import { Request, Response } from 'express';
+import CustomError from '../../utils/CustomError';
+import { ERROR_MESSAGES, ERROR_STATUS } from '../../utils/error.constants';
 
-async function httpGetAllPlanets(req: Request, res: Response): Promise<any> {
+async function httpGetAllPlanets(
+  req: Request,
+  res: Response,
+  next: any
+): Promise<any> {
   try {
     const planets = await getAllPlanets();
-    return res.status(200).json(planets);
+    return res.status(ERROR_STATUS.OK).json(planets);
   } catch (error) {
-    console.error('Failed to fetch planets:', error);
-    return res.status(500).json({
-      error: 'Failed to fetch planets',
-    });
+    next(
+      new CustomError(
+        ERROR_MESSAGES.FAILED_TO_FETCH_PLANETS,
+        ERROR_STATUS.INTERNAL_SERVER_ERROR
+      )
+    );
   }
 }
 

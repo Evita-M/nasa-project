@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 import {
   getPaginatedLaunches,
-  scheduleNewLaunch,
   abortLaunchById,
   existsLaunchWithId,
-  ErrorCode,
   LaunchStatus,
+  scheduleNewLaunch,
 } from '../../models/launches.models';
-
-export const MESSAGE = {
-  MISSING_REQUIRED_PROPERTY: 'Missing required launch property',
-  INVALID_LAUNCH_DATE: 'Invalid launch date',
-};
+import CustomError from '../../utils/CustomError';
+import { ERROR_MESSAGES, ERROR_STATUS } from '../../utils/error.constants';
 
 // GET all launches
-async function httpGetAllLaunches(req: Request, res: Response): Promise<any> {
+async function httpGetAllLaunches(
+  req: Request,
+  res: Response,
+  next: any
+): Promise<any> {
   try {
     const { page = 1, limit = 10, status } = req.query;
     const pageNum = parseInt(page as string, 10) || 1;
@@ -23,80 +23,74 @@ async function httpGetAllLaunches(req: Request, res: Response): Promise<any> {
     const { launches, totalCount, upcomingCount, historyCount } =
       await getPaginatedLaunches(skip, limitNum, status as LaunchStatus);
     return res
-      .status(200)
+      .status(ERROR_STATUS.OK)
       .json({ launches, totalCount, upcomingCount, historyCount });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: err.message || 'Internal server error' });
+    next(err);
   }
 }
 
 // POST new launch
-async function httpCreateLaunch(req: Request, res: Response): Promise<any> {
+async function httpCreateLaunch(
+  req: Request,
+  res: Response,
+  next: any
+): Promise<any> {
   try {
     const launch = req.body;
     const { missionName, rocketName, launchDate, planetName } = launch;
 
     if (!missionName || !rocketName || !launchDate || !planetName) {
-      return res.status(400).json({
-        message: MESSAGE.MISSING_REQUIRED_PROPERTY,
+      return res.status(ERROR_STATUS.BAD_REQUEST).json({
+        message: ERROR_MESSAGES.MISSING_REQUIRED_PROPERTY,
       });
     }
 
     const parsedLaunchDate = new Date(launchDate);
-
-    if (isNaN(parsedLaunchDate.valueOf())) {
-      return res.status(400).json({
-        message: MESSAGE.INVALID_LAUNCH_DATE,
-      });
+    if (isNaN(parsedLaunchDate.getTime())) {
+      throw new CustomError(
+        ERROR_MESSAGES.INVALID_LAUNCH_DATE,
+        ERROR_STATUS.BAD_REQUEST
+      );
     }
 
-    const launchData = {
+    const newLaunch = await scheduleNewLaunch({
       missionName,
       rocketName,
-      planetName,
       launchDate: parsedLaunchDate,
-    };
-
-    try {
-      const newLaunch = await scheduleNewLaunch(launchData);
-      return res.status(201).json(newLaunch);
-    } catch (err) {
-      if (err.message === ErrorCode.PlanetNotFound)
-        return res.status(500).json({ message: 'No matching planet found' });
-      return res.status(500).json({ message: 'Something went wrong' });
-    }
+      planetName,
+    });
+    return res.status(ERROR_STATUS.CREATED).json(newLaunch);
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: err.message || 'Internal server error' });
+    next(err);
   }
 }
 
 // DELETE launch by id
-async function httpAbortLaunch(req: Request, res: Response): Promise<any> {
+async function httpAbortLaunch(
+  req: Request,
+  res: Response,
+  next: any
+): Promise<any> {
   try {
     const id = req.params.id;
     const existingLaunch = await existsLaunchWithId(id);
     if (!existingLaunch) {
-      return res.status(404).json({
-        message: 'Launch not found',
-      });
+      throw new CustomError(
+        ERROR_MESSAGES.LAUNCH_NOT_FOUND,
+        ERROR_STATUS.NOT_FOUND
+      );
     }
     const aborted = await abortLaunchById(id);
     if (!aborted) {
-      return res.status(400).json({
-        message: 'Launch not aborted',
-      });
+      throw new CustomError(
+        ERROR_MESSAGES.LAUNCH_NOT_ABORTED,
+        ERROR_STATUS.BAD_REQUEST
+      );
     }
-    return res.status(200).json({
-      ok: true,
-    });
+    return res.status(ERROR_STATUS.OK).json({ ok: true });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: err.message || 'Internal server error' });
+    next(err);
   }
 }
 

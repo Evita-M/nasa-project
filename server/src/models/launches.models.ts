@@ -2,10 +2,8 @@ import { simpleFaker } from '@faker-js/faker';
 import LaunchesDatabase from './launches.mongo';
 import PlanetsDatabase from './planets.mongo';
 import axios from 'axios';
-
-enum ErrorCode {
-  PlanetNotFound = 'PlanetNotFound',
-}
+import CustomError from '../utils/CustomError';
+import { ERROR_MESSAGES, ERROR_STATUS } from '../utils/error.constants';
 
 interface LaunchPayload {
   missionName: string;
@@ -62,7 +60,10 @@ async function populateLaunches() {
 
   if (response.status !== 200) {
     console.log('Problem downloading launch data');
-    throw new Error('Launch data download failed');
+    throw new CustomError(
+      ERROR_MESSAGES.LAUNCH_DATA_DOWNLOAD_FAILED,
+      ERROR_STATUS.INTERNAL_SERVER_ERROR
+    );
   }
 
   const launchDocs = response.data.docs;
@@ -153,7 +154,10 @@ async function scheduleNewLaunch(launch: LaunchPayload): Promise<Launch> {
     keplerName: launch.planetName,
   });
   if (!planet) {
-    throw new Error(ErrorCode.PlanetNotFound);
+    throw new CustomError(
+      ERROR_MESSAGES.PLANET_NOT_FOUND,
+      ERROR_STATUS.NOT_FOUND
+    );
   }
   const newFlightNumber = (await getLatestFlightNumber()) + 1;
 
@@ -193,8 +197,12 @@ async function abortLaunchById(id: string): Promise<boolean> {
     { id },
     { status: LaunchStatus.HISTORY, success: false }
   );
-  console.log(abortedLaunch);
-  console.log(await LaunchesDatabase.find({ id }));
+  if (!abortedLaunch) {
+    throw new CustomError(
+      ERROR_MESSAGES.LAUNCH_NOT_FOUND,
+      ERROR_STATUS.NOT_FOUND
+    );
+  }
   return abortedLaunch.modifiedCount === 1;
 }
 
@@ -206,5 +214,4 @@ export {
   scheduleNewLaunch,
   existsLaunchWithId,
   loadLaunchData,
-  ErrorCode,
 };

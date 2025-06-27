@@ -10,6 +10,7 @@ import routeInit from './routes/index';
 import { loadPlanetsData } from './models/planets.model';
 import { mongoConnect } from './services/mongo';
 import { loadLaunchData } from './models/launches.models';
+import errorMiddleware from './middlewares/error.middleware';
 
 dotenv.config();
 
@@ -44,6 +45,9 @@ app.get('/', (_req: Request, res: Response) => {
 app.get('/{*splat}', (req, res, next) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
+
+// Error handling
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 8000;
 
