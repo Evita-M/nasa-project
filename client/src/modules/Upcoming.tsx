@@ -1,4 +1,5 @@
-import { FC, useMemo, useRef, useEffect, useCallback } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import {
   Table,
   TableBody,
@@ -27,7 +28,7 @@ interface UpcomingProps {
   ) => Promise<void>;
 }
 
-export const Upcoming: FC<UpcomingProps> = ({
+export const Upcoming = ({
   launches,
   abortLaunch,
   isLoading,
@@ -35,81 +36,57 @@ export const Upcoming: FC<UpcomingProps> = ({
   page,
   limit,
   fetchLaunches,
-}) => {
+}: UpcomingProps) => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  // Infinite scroll logic
   const loadMore = useCallback(() => {
     if (!isLoading && hasMore) {
       fetchLaunches(page + 1, limit, LaunchStatus.UPCOMING, true);
     }
   }, [isLoading, hasMore, fetchLaunches, page, limit]);
 
-  useEffect(() => {
-    const observer = new window.IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
-          loadMore();
-        }
-      },
-      { threshold: 1 }
-    );
-    const node = observerRef.current;
-    if (node) observer.observe(node);
-    return () => {
-      if (node) observer.unobserve(node);
-    };
-  }, [loadMore, hasMore, isLoading]);
+  useInfiniteScroll(observerRef, loadMore, hasMore, isLoading);
 
   const tableBody = useMemo(() => {
-    return launches
-      ?.filter((launch) => launch.status === LaunchStatus.UPCOMING)
-      .map(
-        ({
-          flightNumber,
-          launchDate,
-          missionName,
-          rocketName,
-          planetName,
-          id,
-          customers,
-        }) => (
-          <TableRow key={id}>
-            <TableCell>{flightNumber}</TableCell>
-            <TableCell>{new Date(launchDate).toDateString()}</TableCell>
-            <TableCell>{missionName}</TableCell>
-            <TableCell>{rocketName}</TableCell>
-            <TableCell>{planetName}</TableCell>
-            <TableCell>{customers?.join(', ')}</TableCell>
-            <TableCell>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => abortLaunch(id)}
-                className="min-w-auto w-[2rem]"
-              >
-                <XIcon className="h-6 w-6" color="var(--error)" />
-              </Button>
-            </TableCell>
-          </TableRow>
-        )
-      );
+    return launches.map(
+      ({
+        flightNumber,
+        launchDate,
+        missionName,
+        rocketName,
+        planetName,
+        id,
+        customers,
+      }) => (
+        <TableRow key={id}>
+          <TableCell>{flightNumber}</TableCell>
+          <TableCell>{new Date(launchDate).toDateString()}</TableCell>
+          <TableCell>{missionName}</TableCell>
+          <TableCell>{rocketName}</TableCell>
+          <TableCell>{planetName}</TableCell>
+          <TableCell>{customers?.join(', ')}</TableCell>
+          <TableCell>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label="Abort launch"
+              onClick={() => abortLaunch(id)}
+              className="min-w-auto w-[2rem]"
+            >
+              <XIcon className="h-6 w-6" color="var(--error)" />
+            </Button>
+          </TableCell>
+        </TableRow>
+      )
+    );
   }, [launches, abortLaunch]);
 
   return (
     <>
       {launches.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center h-full w-full min-h-[inherit]">
-          <EmptyState text="No upcoming missions" />
-        </div>
+        <EmptyState text="No upcoming missions" />
       ) : (
-        <div
-          style={{
-            maxHeight: '500px',
-            overflowY: 'auto',
-            position: 'relative',
-          }}
-        >
+        <div className="overflow-y-auto relative scrollbar-hide">
           <Table id="upcoming" className="rounded-md border">
             <TableHeader>
               <TableRow>
@@ -122,10 +99,18 @@ export const Upcoming: FC<UpcomingProps> = ({
                 <TableHead className="w-[2rem]"></TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>{tableBody}</TableBody>
+            <TableBody>
+              {tableBody}
+              <TableRow>
+                <TableCell colSpan={7} className="text-center p-0">
+                  <div ref={observerRef} />
+                  {isLoading && (
+                    <div className="text-center py-4">Loading...</div>
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
-          <div ref={observerRef} style={{ height: 32 }} />
-          {isLoading && <div className="text-center py-2">Loading...</div>}
         </div>
       )}
     </>

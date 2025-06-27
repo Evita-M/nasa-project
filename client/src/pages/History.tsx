@@ -2,34 +2,17 @@ import { EmptyState } from '@/components/EmptyState';
 import { Heading } from '@/components/Heading';
 import { Loader } from '@/components/Loader';
 import { History } from '@/modules/History';
-import launchesStore from '@/store/launches-store';
+import { usePaginatedLaunches } from '@/hooks/usePaginatedLaunches';
 import { LaunchStatus } from '@/types/launch';
-import { useEffect, useState } from 'react';
 
 export default function HistoryPage() {
-  const {
-    launches,
-    fetchLaunches,
-    totalCount,
-    isLoading,
-    page,
-    limit,
-    historyCount,
-  } = launchesStore();
-  const [hasMore, setHasMore] = useState(true);
-
-  useEffect(() => {
-    fetchLaunches(1, 10, LaunchStatus.HISTORY, false);
-  }, [fetchLaunches]);
-
-  useEffect(() => {
-    setHasMore(launches.length < totalCount);
-  }, [launches.length, totalCount]);
+  const { launches, fetchLaunches, isLoading, page, limit, hasMore, count } =
+    usePaginatedLaunches(LaunchStatus.HISTORY);
 
   return (
     <>
       <Heading title="History" subtitle="View the history of all missions" />
-      {historyCount === 0 ? (
+      {count === 0 ? (
         isLoading ? (
           <Loader />
         ) : (

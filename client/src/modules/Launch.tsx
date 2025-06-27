@@ -1,14 +1,13 @@
 import { LaunchForm } from '@/forms/create-launch';
 import { LaunchFormValues } from '@/forms/create-launch/schema';
 import { Planet } from '@/types/planet';
-import { FC } from 'react';
 
 interface LaunchProps {
   planets: Planet[];
   onSubmit: (launch: LaunchFormValues) => Promise<void>;
 }
 
-export const Launch: FC<LaunchProps> = ({ planets, onSubmit }) => (
+export const Launch = ({ planets, onSubmit }: LaunchProps) => (
   <div className="space-y-4">
     <div className="rounded-lg bg-slate-900/80 p-4 border-1 border-cyan-500">
       <p className="mb-2 font-medium">
