@@ -49,7 +49,6 @@ export const NavLink: FC<NavLinkProps> = ({
           {count}
         </span>
       )}
-      s
     </Link>
   );
 };
