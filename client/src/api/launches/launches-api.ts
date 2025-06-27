@@ -1,11 +1,11 @@
+import { Launch } from '@/types/launch';
 import axiosInstance from '../axios-instance';
 
-async function httpGetLaunches() {
-  const response = await axiosInstance.get('/launches');
-  const sortedLaunches = response.data.sort((a: any, b: any) => {
-    return a.flightNumber - b.flightNumber;
+async function httpGetLaunches(page = 1, limit = 10, status?: Launch) {
+  const response = await axiosInstance.get('/launches', {
+    params: { page, limit, status },
   });
-  return sortedLaunches;
+  return response.data;
 }
 
 async function httpSubmitLaunch(launch: unknown) {

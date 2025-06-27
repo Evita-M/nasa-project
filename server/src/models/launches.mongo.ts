@@ -28,8 +28,9 @@ const launchesSchema = new mongoose.Schema({
     required: true,
   },
   customers: [String],
-  upcoming: {
-    type: Boolean,
+  status: {
+    type: String,
+    enum: ['upcoming', 'history'],
     required: true,
   },
   success: {

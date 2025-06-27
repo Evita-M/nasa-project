@@ -5,7 +5,7 @@ import {
   httpGetLaunches,
   httpSubmitLaunch,
 } from './launches-api';
-import { Launch, LaunchPayload } from '@/types/launch';
+import { Launch, LaunchPayload, LaunchStatus } from '@/types/launch';
 import { testErrorHandling } from '@/lib/test-helpers';
 
 vi.mock('../axios-instance', () => ({
@@ -29,7 +29,7 @@ describe('GET launches', () => {
     launchDate: new Date('January 4, 2028'),
     planetName: 'Kepler-186 f',
     customers: ['NASA', 'SpaceX'],
-    upcoming: true,
+    status: LaunchStatus.UPCOMING,
     success: true,
   };
 

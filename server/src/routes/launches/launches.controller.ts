@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import {
-  getAllLaunches,
+  getPaginatedLaunches,
   scheduleNewLaunch,
   abortLaunchById,
   existsLaunchWithId,
   ErrorCode,
+  LaunchStatus,
 } from '../../models/launches.models';
 
 export const MESSAGE = {
@@ -15,8 +16,15 @@ export const MESSAGE = {
 // GET all launches
 async function httpGetAllLaunches(req: Request, res: Response): Promise<any> {
   try {
-    const launches = await getAllLaunches();
-    return res.status(200).json(launches);
+    const { page = 1, limit = 10, status } = req.query;
+    const pageNum = parseInt(page as string, 10) || 1;
+    const limitNum = parseInt(limit as string, 10) || 10;
+    const skip = (pageNum - 1) * limitNum;
+    const { launches, totalCount, upcomingCount, historyCount } =
+      await getPaginatedLaunches(skip, limitNum, status as LaunchStatus);
+    return res
+      .status(200)
+      .json({ launches, totalCount, upcomingCount, historyCount });
   } catch (err) {
     return res
       .status(500)

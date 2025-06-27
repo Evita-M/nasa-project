@@ -9,6 +9,7 @@ import routeInit from './routes/index';
 
 import { loadPlanetsData } from './models/planets.model';
 import { mongoConnect } from './services/mongo';
+import { loadLaunchData } from './models/launches.models';
 
 dotenv.config();
 
@@ -51,6 +52,7 @@ const server = http.createServer(app);
 async function startServer() {
   await mongoConnect();
   await loadPlanetsData();
+  await loadLaunchData();
   server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}...`);
   });

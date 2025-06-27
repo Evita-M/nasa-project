@@ -3,9 +3,11 @@ import request from 'supertest';
 import app from '../../server';
 import { MESSAGE } from './launches.controller';
 import { mongoConnect, mongoDisconnect } from '../../services/mongo';
+import { loadPlanetsData } from '../../models/planets.model';
 
 beforeAll(async () => {
   await mongoConnect();
+  await loadPlanetsData();
 });
 
 afterAll(async () => {
@@ -14,7 +16,7 @@ afterAll(async () => {
 
 describe('Test GET /launches', () => {
   it('should return a 200 status code', async () => {
-    const response = await request(app).get('/api/v1/launches').expect(200);
+    await request(app).get('/api/v1/launches').expect(200);
   });
 });
 
