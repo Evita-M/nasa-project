@@ -1,9 +1,9 @@
 import { describe, it, expect, afterAll, beforeAll } from 'vitest';
 import request from 'supertest';
 import app from '../../server';
-import { MESSAGE } from './launches.controller';
 import { mongoConnect, mongoDisconnect } from '../../services/mongo';
 import { loadPlanetsData } from '../../models/planets.model';
+import { ERROR_MESSAGES } from '../../utils/error.constants';
 
 beforeAll(async () => {
   await mongoConnect();
@@ -55,7 +55,7 @@ describe('Test POST /launches', () => {
       .expect(400);
 
     expect(response.body).toStrictEqual({
-      message: MESSAGE.MISSING_REQUIRED_PROPERTY,
+      message: ERROR_MESSAGES.MISSING_REQUIRED_PROPERTY,
     });
   });
 
@@ -69,7 +69,7 @@ describe('Test POST /launches', () => {
       .expect(400);
 
     expect(response.body).toStrictEqual({
-      message: MESSAGE.INVALID_LAUNCH_DATE,
+      message: ERROR_MESSAGES.INVALID_LAUNCH_DATE,
     });
   });
 });
