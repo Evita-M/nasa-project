@@ -4,24 +4,14 @@ import UpcomingPage from './pages/Upcoming';
 import HistoryPage from './pages/History';
 import { MainLayout } from './layout/MainLayout';
 import './index.css';
-import launchesStore from './store/launches-store';
-import { useEffect } from 'react';
 import { Suspense } from 'react';
 import { Loader } from './components/Loader';
-import planetsStore from './store/planets-store';
 import { ErrorBoundary } from 'react-error-boundary';
 import NotFoundPage from './pages/NotFound';
 import { routes } from './lib/routes';
 
 const App = () => {
-  const { fetchLaunches } = launchesStore();
   const {home, launch, upcoming, history, notFound}= routes
-  const {fetchPlanets} = planetsStore()
-
-  useEffect(() => {
-      fetchLaunches();
-      fetchPlanets();
-  }, []);
 
   return (
       <ErrorBoundary fallback={<p>Error loading data...</p>}>
@@ -42,6 +32,5 @@ const App = () => {
       </ErrorBoundary>
   );
 };
-
 
 export default App;

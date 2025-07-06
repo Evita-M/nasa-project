@@ -16,6 +16,7 @@ interface LaunchesStore {
   totalCount: number;
   upcomingCount: number;
   historyCount: number;
+  currentStatus: LaunchStatus | undefined;
 
   fetchLaunches: (
     page?: number,
@@ -39,6 +40,7 @@ const launchesStore = create<LaunchesStore>((set, get) => ({
   totalCount: 0,
   upcomingCount: 0,
   historyCount: 0,
+  currentStatus: undefined,
 
   fetchLaunches: async (
     page = DEFAULT_PAGE,
@@ -59,6 +61,7 @@ const launchesStore = create<LaunchesStore>((set, get) => ({
         page,
         limit,
         isLoading: false,
+        currentStatus: status,
       }));
     } catch (error) {
       set({ error: 'Failed to fetch launches', isLoading: false });
@@ -69,10 +72,9 @@ const launchesStore = create<LaunchesStore>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await httpSubmitLaunch(launch);
-      set({
-        isLoading: false,
-        upcomingCount: get().upcomingCount + 1,
-      });
+      // Refetch data to get updated counts and ensure data consistency
+      const state = get();
+      await state.fetchLaunches(state.page, state.limit, state.currentStatus, false);
     } catch (error) {
       set({ error: 'Failed to submit launch', isLoading: false });
     }
@@ -82,16 +84,9 @@ const launchesStore = create<LaunchesStore>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await httpAbortLaunch(id);
-      set({
-        isLoading: false,
-        historyCount: get().historyCount + 1,
-        upcomingCount: get().upcomingCount - 1,
-        launches: get().launches.map((launch) =>
-          launch.id === id
-            ? { ...launch, status: LaunchStatus.HISTORY }
-            : launch
-        ),
-      });
+      // Refetch data to get updated counts and ensure data consistency
+      const state = get();
+      await state.fetchLaunches(state.page, state.limit, state.currentStatus, false);
     } catch (error) {
       set({ error: 'Failed to abort launch', isLoading: false });
     }
